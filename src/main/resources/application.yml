@@ -32,14 +32,14 @@ zuul:
       path: /cos/**
       serviceid: copper-server
     api-c:
-      path: /web/**
-      serviceid: copper-surface
+      path: /jcs/**
+      serviceid: jx-copper-storage
     api-d:
       path: /ius/**
       serviceId: fast-auth-server
     api-e:
-      path: /jcs/**
-      serviceId: jx-copper-storage
+      path: /web/**
+      serviceId: copper-surface
 cas:
   feign:
     name: ljy-nju-charging-service
