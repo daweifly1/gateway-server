@@ -83,16 +83,16 @@
 						</goals>
 					</execution>
 				</executions>
-				<configuration>
-					<executable>java</executable>
-					<arguments>
-						<argument>-Xms128m</argument>
-						<argument>-Xmx512m</argument>
-						<argument>-jar</argument>
-						<argument>${basedir}/../allatori-confusion/allatori.jar</argument>
-						<argument>${basedir}/src/main/resources/allatori.xml</argument>
-					</arguments>
-				</configuration>
+				<!--<configuration>-->
+					<!--<executable>java</executable>-->
+					<!--<arguments>-->
+						<!--<argument>-Xms128m</argument>-->
+						<!--<argument>-Xmx512m</argument>-->
+						<!--<argument>-jar</argument>-->
+						<!--<argument>${basedir}/../allatori-confusion/allatori.jar</argument>-->
+						<!--<argument>${basedir}/src/main/resources/allatori.xml</argument>-->
+					<!--</arguments>-->
+				<!--</configuration>-->
 			</plugin>
 		</plugins>
 	</build>
