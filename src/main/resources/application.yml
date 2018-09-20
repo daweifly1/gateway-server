@@ -1,0 +1,53 @@
+eureka:
+  client:
+    service-url:
+      defaultZone: http://192.168.1.37:9000/eureka/
+server:
+  port: 8087
+fast:
+  webfront:
+    path: F:\jcc\web
+    error-page:
+      notfound: /index.html
+spring:
+  redis:
+    host: 192.168.1.88
+    port: 7021
+  resources:
+    static-locations: classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/,file:${fast.webfront.path}
+  cloud:
+    inetutils:
+      preferred-networks:
+        - 192.168
+  zipkin:
+    enabled: false
+#当enabled=true时，base-url需要配置
+    base-url: http://192.168.1.149:9002  
+zuul:
+  routes:
+    api-a:
+      path: /cop/**
+      serviceid: copper-purchase
+    api-b:
+      path: /cos/**
+      serviceid: copper-server
+    api-c:
+      path: /web/**
+      serviceid: copper-surface
+    api-d:
+      path: /ius/**
+      serviceId: fast-auth-server
+    api-e:
+      path: /jcs/**
+      serviceId: jx-copper-storage
+cas:
+  feign:
+    name: ljy-nju-charging-service
+  auth:
+    ticket-key: ticket
+  defaultUrl: http://219.219.116.11:8080 
+logging:
+  file: /opt/jxty/logs/gateway.log
+  level:
+    root: info
+    ufast: info
