@@ -9,20 +9,16 @@ import org.springframework.stereotype.Service;
 @Service
 public class ErrorFilter extends ZuulFilter {
 
-    private Logger ALLATORIxDEMO;
+    private Logger logger = LoggerFactory.getLogger(getClass());
 
 
     public Object run() {
         RequestContext var10000 = RequestContext.getCurrentContext();
         Throwable var1 = var10000.getThrowable();
-        this.ALLATORIxDEMO.error("this is a Filter Error : {}", var1.getCause().getMessage());
+        this.logger.error("this is a Filter Error : {}", var1.getCause().getMessage());
         var10000.set("error.status_code", Integer.valueOf(500));
         var10000.set("error.exception", var1.getCause());
         return null;
-    }
-
-    public ErrorFilter() {
-        this.ALLATORIxDEMO = LoggerFactory.getLogger(this.getClass());
     }
 
     public boolean shouldFilter() {

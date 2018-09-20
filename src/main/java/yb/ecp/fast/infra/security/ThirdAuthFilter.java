@@ -18,7 +18,7 @@ import yb.ecp.fast.infra.util.StringUtil;
 public class ThirdAuthFilter extends ZuulFilter {
 
    @Value("${fast.auth.thirdAuth.url}")
-   private String[] ALLATORIxDEMO;
+   private String[] thirdAuthUrl;
 
 
    public int filterOrder() {
@@ -27,8 +27,8 @@ public class ThirdAuthFilter extends ZuulFilter {
 
    public boolean shouldFilter() {
       String var1 = RequestContext.getCurrentContext().getRequest().getRequestURI();
-      String[] var2 = this.ALLATORIxDEMO;
-      int var3 = this.ALLATORIxDEMO.length;
+      String[] var2 = this.thirdAuthUrl;
+      int var3 = this.thirdAuthUrl.length;
 
       int var4;
       for(int var10000 = var4 = 0; var10000 < var3; var10000 = var4) {

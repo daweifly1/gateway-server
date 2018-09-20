@@ -27,22 +27,21 @@ public class PreprocessRequestFilter extends ZuulFilter {
     }
 
     public Object run() {
-//      RequestContext var1;
-//      RequestContext var10000 = var1 = RequestContext.getCurrentContext();
-//      String var2 = var10000.getRequest().getRequestURI();
-//      HttpSession var3 = var10000.getRequest().getSession();
-//      var10000.addZuulRequestHeader("x-access-client", "gateway");
-//      if(!StringUtil.isNullOrSpace(var2 = (String)var3.getAttribute("uid"))) {
-//         var1.addZuulRequestHeader("x-user-id", var2);
+//      RequestContext ctx = RequestContext.getCurrentContext();
+//      String requestUri = ctx.getRequest().getRequestURI();
+//      HttpSession httpSession = ctx.getRequest().getSession();
+//      ctx.addZuulRequestHeader("x-access-client", "gateway");
+//      if(!StringUtil.isNullOrSpace(requestUri = (String)httpSession.getAttribute("uid"))) {
+//         ctx.addZuulRequestHeader("x-user-id", requestUri);
 //         return null;
 //      } else {
-//         var1.addZuulRequestHeader("x-user-id", " ");
+//         ctx.addZuulRequestHeader("x-user-id", " ");
 //         return null;
 //      }
 
         System.out.println(getClass());
         RequestContext ctx = RequestContext.getCurrentContext();
-        String requestUri = ctx.getRequest().getRequestURI();
+//        String requestUri = ctx.getRequest().getRequestURI();
         HttpSession httpSession = ctx.getRequest().getSession();
         ctx.addZuulRequestHeader("x-access-client", "true");
         String userId = (String) httpSession.getAttribute("uid");

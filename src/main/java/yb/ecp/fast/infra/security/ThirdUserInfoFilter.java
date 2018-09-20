@@ -17,7 +17,7 @@ import java.util.Map;
 public class ThirdUserInfoFilter extends ZuulFilter {
 
     @Value("${fast.auth.thirdUser.url}")
-    private String[] ALLATORIxDEMO;
+    private String[] thirdAuthUrl;
 
 
     public Object run() {
@@ -44,8 +44,8 @@ public class ThirdUserInfoFilter extends ZuulFilter {
 
     public boolean shouldFilter() {
         String var1 = RequestContext.getCurrentContext().getRequest().getRequestURI();
-        String[] var2 = this.ALLATORIxDEMO;
-        int var3 = this.ALLATORIxDEMO.length;
+        String[] var2 = this.thirdAuthUrl;
+        int var3 = this.thirdAuthUrl.length;
 
         int var4;
         for (int var10000 = var4 = 0; var10000 < var3; var10000 = var4) {
