@@ -1,9 +1,9 @@
 eureka:
   client:
     service-url:
-      defaultZone: http://192.168.1.37:9000/eureka/
+      defaultZone: http://192.168.1.157:7001/eureka/
 server:
-  port: 8087
+  port: 9012
 fast:
   webfront:
     path: F:\jcc\web

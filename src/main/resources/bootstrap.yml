@@ -5,7 +5,7 @@ eureka:
     registry-fetch-interval-seconds: 5
 spring:
   application:
-    name: gateway-server-xcs1
+    name: fast-auth-server
     config:
       enabled: false
       discovery:
