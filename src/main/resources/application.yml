@@ -3,7 +3,7 @@ eureka:
     service-url:
       defaultZone: http://192.168.1.157:7001/eureka/
 server:
-  port: 9012
+  port: 9013
 fast:
   webfront:
     path: F:\jcc\web
@@ -18,11 +18,11 @@ spring:
   cloud:
     inetutils:
       preferred-networks:
-        - 192.168
+      - 192.168
   zipkin:
     enabled: false
-#当enabled=true时，base-url需要配置
-    base-url: http://192.168.1.149:9002  
+    #当enabled=true时，base-url需要配置
+    base-url: http://192.168.1.149:9002
 zuul:
   routes:
     api-a:
@@ -45,9 +45,9 @@ cas:
     name: ljy-nju-charging-service
   auth:
     ticket-key: ticket
-  defaultUrl: http://219.219.116.11:8080 
+  defaultUrl: http://219.219.116.11:8080
 logging:
-  file: /opt/jxty/logs/gateway.log
+  file: /log/gateway.log
   level:
     root: info
     ufast: info

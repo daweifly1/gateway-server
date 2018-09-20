@@ -1,69 +1,69 @@
-eureka:
-  client:
-    service-url:
-      defaultZone: http://192.168.1.143:7001/eureka/
-server:
-  port: 7003
-fast:
-  webfront:
-    path: /opt/jxty/web
-    error-page:
-      notfound: /index.html
-spring:
-  redis:
-    host: 192.168.1.143
-    port: 6379
-  resources:
-    static-locations: classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/,file:${fast.webfront.path}
-  cloud:
-    inetutils:
-      preferred-networks:
-        - 192.168
-  zipkin:
-    enabled: false
-#当enabled=true时，base-url需要配置
-    base-url: http://192.168.1.149:9002  
-zuul:
-  routes:
-    api-a:
-      path: /ius/**
-      serviceId: fast-auth-server
-    api-b:
-      path: /charge/**
-      serviceId: nju-charging-service
-    api-c:
-      path: /dev/**
-      serviceId: device-service-l
-    api-d:
-      path: /ous/**
-      serviceId: fast-oauth2-server
-    api-e:
-      path: /jcs/**
-      serviceId: jx-copper-storage
-    api-s:
-      path: /cos/**
-      serviceId: copper-service
-    api-t:
-      path: /cop/**
-      serviceId: copper-purchase-service
-    api-web:
-      path: /web/**
-      serviceId: web-service
-    api-cms:
-      path: /fastcms/**
-      url: http://192.168.1.149:8080/fastcms
-    api-img:
-      path: /img/**
-      url: http://192.168.1.143:8099/
-#      url: http://10.99.102.206:80/
-cas:
-  feign:
-    name: ljy-nju-charging-service
-  auth:
-    ticket-key: ticket
-  defaultUrl: http://219.219.116.11:8080 
-logging:
-  file: /opt/jxty/logs/gateway.log
-  level:
-    root: info
-    ufast: info
+#eureka:
+#  client:
+#    service-url:
+#      defaultZone: http://192.168.1.143:7001/eureka/
+#server:
+#  port: 7003
+#fast:
+#  webfront:
+#    path: /opt/jxty/web
+#    error-page:
+#      notfound: /index.html
+#spring:
+#  redis:
+#    host: 192.168.1.143
+#    port: 6379
+#  resources:
+#    static-locations: classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/,file:${fast.webfront.path}
+#  cloud:
+#    inetutils:
+#      preferred-networks:
+#        - 192.168
+#  zipkin:
+#    enabled: false
+##当enabled=true时，base-url需要配置
+#    base-url: http://192.168.1.149:9002
+#zuul:
+#  routes:
+#    api-a:
+#      path: /ius/**
+#      serviceId: fast-auth-server
+#    api-b:
+#      path: /charge/**
+#      serviceId: nju-charging-service
+#    api-c:
+#      path: /dev/**
+#      serviceId: device-service-l
+#    api-d:
+#      path: /ous/**
+#      serviceId: fast-oauth2-server
+#    api-e:
+#      path: /jcs/**
+#      serviceId: jx-copper-storage
+#    api-s:
+#      path: /cos/**
+#      serviceId: copper-service
+#    api-t:
+#      path: /cop/**
+#      serviceId: copper-purchase-service
+#    api-web:
+#      path: /web/**
+#      serviceId: web-service
+#    api-cms:
+#      path: /fastcms/**
+#      url: http://192.168.1.149:8080/fastcms
+#    api-img:
+#      path: /img/**
+#      url: http://192.168.1.143:8099/
+##      url: http://10.99.102.206:80/
+#cas:
+#  feign:
+#    name: ljy-nju-charging-service
+#  auth:
+#    ticket-key: ticket
+#  defaultUrl: http://219.219.116.11:8080
+#logging:
+#  file: /opt/jxty/logs/gateway.log
+#  level:
+#    root: info
+#    ufast: info
