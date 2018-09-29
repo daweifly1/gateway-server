@@ -2,6 +2,10 @@ eureka:
   client:
     service-url:
       defaultZone: http://127.0.0.1:7001/eureka/
+    fetchRegistry: true
+  instance:
+    ip-address: 127.0.0.1
+    prefer-ip-address: true
 server:
   port: 9013
 fast:
@@ -11,14 +15,17 @@ fast:
       notfound: /index.html
 spring:
   redis:
-    host: 127.0.0.1
+    host: 10.100.2.134
     port: 6379
   resources:
     static-locations: classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/,file:${fast.webfront.path}
-  cloud:
-    inetutils:
-      preferred-networks:
-      - 127.0
+  #  cloud:
+  #    inetutils:
+  #      preferred-networks:
+  #      - 127.0
+
+
+
   zipkin:
     enabled: false
     #当enabled=true时，base-url需要配置
@@ -27,19 +34,19 @@ zuul:
   routes:
     api-a:
       path: /cop/**
-      serviceid: copper-purchase
+      service-id: copper-purchase
     api-b:
       path: /cos/**
-      serviceid: copper-server
+      service-id: copper-server
     api-c:
       path: /jcs/**
-      serviceid: jx-copper-storage
+      service-id: storage
     api-d:
       path: /ius/**
-      serviceId: fast-auth-server
+      service-id: fast-auth-server
     api-e:
       path: /web/**
-      serviceId: copper-surface
+      service-id: copper-surface
 cas:
   feign:
     name: ljy-nju-charging-service

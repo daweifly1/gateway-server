@@ -35,15 +35,15 @@ fast:
 zuul:
   sensitive-headers: x-user-id,x-access-client,x-case-ticket
   host:
-    socket-timeout-millis: 2000
-    connect-timeout-millis: 10000
+    socket-timeout-millis: 60000
+    connect-timeout-millis: 60000
 hystrix:
   command:
     default:
       execution:
         isolation:
           thread:
-            timeoutInMilliseconds: 10000
+            timeoutInMilliseconds: 1000000
 ribbon:
-  ReadTimeout: 10000
-  ConnectTimeout: 10000
+  ReadTimeout: 1000000
+  ConnectTimeout: 1000000
