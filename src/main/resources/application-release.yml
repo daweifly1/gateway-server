@@ -1,7 +1,7 @@
 eureka:
   client:
     service-url:
-      defaultZone: http://127.0.0.1:7001/eureka/
+      defaultZone: http://10.100.2.109:18001/eureka/
 server:
   port: 9013
 fast:

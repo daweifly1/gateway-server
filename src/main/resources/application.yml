@@ -1,7 +1,7 @@
 eureka:
   client:
     service-url:
-      defaultZone: http://127.0.0.1:7001/eureka/
+      defaultZone: http://10.100.2.109:18001/eureka/
     fetchRegistry: true
   instance:
     ip-address: 127.0.0.1
@@ -40,7 +40,7 @@ zuul:
       service-id: copper-server
     api-c:
       path: /jcs/**
-      service-id: storage
+      service-id: storage-server
     api-d:
       path: /ius/**
       service-id: fast-auth-server
