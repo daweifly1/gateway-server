@@ -1,7 +1,7 @@
 eureka:
   instance:
     prefer-ip-address: true
-    health-check-url-path: ${management.context-path}/health
+    health-check-url-path: /health
     registry-fetch-interval-seconds: 5
 spring:
   application:

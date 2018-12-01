@@ -4,20 +4,21 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import yb.ecp.fast.infra.infra.ActionResult;
-import yb.ecp.fast.infra.util.StringUtil;
+import yb.ecp.fast.infra.jwt.TokenAuthenticationHandler;
+import yb.ecp.fast.infra.jwt.fastjson.FastJsonUtil;
 
-import javax.servlet.http.HttpSession;
 import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 public class LoginFilter extends ZuulFilter {
-
-    private Logger i;
 
     private Logger mylog = LoggerFactory.getLogger(getClass());
 
@@ -52,11 +53,16 @@ public class LoginFilter extends ZuulFilter {
 
     public Object run() {
         RequestContext ctx = RequestContext.getCurrentContext();
-        HttpSession httpSession = ctx.getRequest().getSession();
+//        HttpSession httpSession = ctx.getRequest().getSession();
         try {
             String userId = postUserLogin(ctx);
-            if (!StringUtil.isNullOrSpace(userId)) {
-                httpSession.setAttribute("uid", userId);
+            if (StringUtils.isNotBlank(userId)) {
+//                httpSession.setAttribute("uid", userId);
+                TokenAuthenticationHandler tokenAuthenticationHandler = new TokenAuthenticationHandler();
+                Map<String, String> user = new HashMap<>();
+                user.put("uid", userId);
+                String token = tokenAuthenticationHandler.generateToken(FastJsonUtil.toJSONString(user));
+                tokenAuthenticationHandler.doRefreshToken(ctx.getResponse(), token, true);
             }
         } catch (Exception exc) {
             this.mylog.error("failed to process things", exc);
@@ -76,7 +82,4 @@ public class LoginFilter extends ZuulFilter {
     }
 
 
-    public LoginFilter() {
-        this.i = LoggerFactory.getLogger(this.getClass());
-    }
 }

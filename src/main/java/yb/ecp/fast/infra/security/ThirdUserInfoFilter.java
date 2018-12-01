@@ -4,17 +4,19 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import yb.ecp.fast.infra.constants.ErrorCode;
 import yb.ecp.fast.infra.infra.ActionResult;
-import yb.ecp.fast.infra.infra.log.LogHelper;
 
 import java.io.IOException;
 import java.util.Map;
 
 @Service
 public class ThirdUserInfoFilter extends ZuulFilter {
+
+    private Logger logger = LoggerFactory.getLogger(getClass());
 
     @Value("${fast.auth.thirdUser.url}")
     private String[] thirdAuthUrl;
@@ -26,12 +28,12 @@ public class ThirdUserInfoFilter extends ZuulFilter {
         if ((var2 = (Map) (var1 = RequestContext.getCurrentContext()).getRequest().getSession().getAttribute("wxMpUser")) != null) {
             ObjectMapper var3;
             (var3 = new ObjectMapper()).configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-            ActionResult var5 = new ActionResult(ErrorCode.Success.getCode(), ErrorCode.Success.getDesc(), var2);
+            ActionResult var5 = new ActionResult(200, "success", var2);
 
             try {
                 var1.setResponseBody(var3.writeValueAsString(var5));
             } catch (IOException var4) {
-                LogHelper.fatal(var4.getMessage(), var4);
+                logger.error(var4.getMessage(), var4);
             }
         }
 

@@ -8,11 +8,13 @@ eureka:
     prefer-ip-address: true
 server:
   port: 9013
+
 fast:
   webfront:
-    path: f:\jcc\web
+    path: /root/jt_prop/dist
     error-page:
       notfound: /index.html
+
 spring:
   redis:
     host: 10.100.2.134
@@ -23,30 +25,31 @@ spring:
   #    inetutils:
   #      preferred-networks:
   #      - 127.0
-
-
-
   zipkin:
     enabled: false
     #当enabled=true时，base-url需要配置
     base-url: http://192.168.1.149:9002
+
 zuul:
   routes:
     api-a:
-      path: /cop/**
-      service-id: copper-purchase
+      path: /cop/** 
+      service-id: copper-purchase 
     api-b:
-      path: /cos/**
-      service-id: copper-server
+      path: /cos/** 
+      service-id: copper-server 
     api-c:
-      path: /jcs/**
-      service-id: storage-server
+      path: /jcs/** 
+      service-id: storage-server 
     api-d:
-      path: /ius/**
-      service-id: fast-auth-server
+      path: /ius/** 
+      service-id: fast-auth-server  
     api-e:
-      path: /web/**
+      path: /web/** 
       service-id: copper-surface
+    api-f:
+      path: /ss/** 
+      service-id: storage-server 
 cas:
   feign:
     name: ljy-nju-charging-service

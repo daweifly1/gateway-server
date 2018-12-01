@@ -25,6 +25,7 @@ import yb.ecp.fast.infra.util.StringUtil;
 import java.util.HashSet;
 import java.util.Set;
 
+@EnabelCorsFilter
 @SpringBootApplication
 @EnableDiscoveryClient
 @EnableZuulProxy
