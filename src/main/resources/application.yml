@@ -7,7 +7,7 @@ eureka:
     ip-address: 127.0.0.1
     prefer-ip-address: true
 server:
-  port: 18005
+  port: 9003
 
 fast:
   webfront:
@@ -30,29 +30,75 @@ spring:
     #当enabled=true时，base-url需要配置
     base-url: http://192.168.1.149:9002
 
+
 zuul:
   routes:
     api-a:
-      path: /cop/** 
-      service-id: copper-purchase 
+      path: /ius/**
+      serviceId: fast-auth-server
+    api-a1:
+      path: /ius-xcs/**
+      serviceId: fast-auth-server-xcs
     api-b:
-      path: /cos/** 
-      service-id: copper-server 
+      path: /ps/**
+      serviceId: purchase-server
+    api-b1:
+      path: /ps-tj/**
+      serviceId: purchase-server-tj
+    api-b2:
+      path: /ps-hx/**
+      serviceId: purchase-server-hx
+    api-b3:
+      path: /ps-zby/**
+      serviceId: purchase-server-zby
     api-c:
-      path: /jcs/** 
-      service-id: storage-server 
+      path: /bs/**
+      serviceId: basic-server
+    api-c1:
+      path: /bs-hx/**
+      serviceId: basic-server-hx
+    api-c2:
+      path: /bs-xcs/**
+      serviceId: basic-server-xcs
+    api-c3:
+      path: /bs-hhw/**
+      serviceId: basic-server-hhw
     api-d:
-      path: /ius/** 
-      service-id: fast-auth-server  
+      path: /ss/**
+      serviceId: storage-server-xcs
+    api-d1:
+      path: /ss-hx/**
+      serviceId: storage-server-hx
+    api-d3:
+      path: /ss-tj/**
+      serviceId: storage-server-tj
+    api-d4:
+      path: /ss-xcs/**
+      serviceId: storage-server-xcs
+    api-d6:
+      path: /ss-wk/**
+      serviceId: storage-server-wk
+    api-d7:
+      path: /ss-zlm/**
+      serviceId: storage-server-zlm
+    api-d8:
+      path: /ss-cdw/**
+      serviceId: storage-server-cdw
+    api-d9:
+      path: /ss-hhw/**
+      serviceId: storage-server-hhw
     api-e:
-      path: /web/** 
-      service-id: copper-surface
+      path: /web/**
+      serviceId: surface-server
+    api-e1:
+      path: /web-lly/**
+      serviceId: surface-server-lly
     api-f:
-      path: /ss/** 
-      service-id: storage-server
-    api-g:
-        path: /ss-cdw/**
-        service-id: storage-server-cdw
+      path: /cop/**
+      serviceId: copper-purchase-service
+    api-img:
+      path: /img/**
+      url: http://192.168.1.143:8099/
 cas:
   feign:
     name: ljy-nju-charging-service

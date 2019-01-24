@@ -21,7 +21,7 @@ public class TokenAuthenticationHandler implements Serializable {
     private static final String CLAIM_KEY_SUBJECT = "subject";
 
     private static final String DEFAULT_SECRET = "scDemo001";
-    public static final Long DEFAULT_EXPIRATION = 200 * 60L;
+    public static final Long DEFAULT_EXPIRATION = 5 * 24 * 60 * 60L;
 
     private String secret = DEFAULT_SECRET;
     private Long EXPIRATION = DEFAULT_EXPIRATION;
