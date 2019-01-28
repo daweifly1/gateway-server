@@ -1,127 +1,138 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-	<groupId>yb.ecp.fast.infra</groupId>
-	<artifactId>gateway-server</artifactId>
-	<packaging>jar</packaging>
+    <groupId>yb.ecp.fast.infra</groupId>
+    <artifactId>gateway-server</artifactId>
+    <packaging>jar</packaging>
 
-	<name>gateway-server</name>
-	<description>api gateway for  project of spring cloud</description>
+    <name>gateway-server</name>
+    <description>api gateway for project of spring cloud</description>
 
-	<parent>
-		<groupId>yb.ecp.fast</groupId>
-		<artifactId>ufast-starter-parent</artifactId>
-		<version>0.0.3-SNAPSHOT</version>
-	</parent>
+    <parent>
+        <groupId>yb.ecp.fast</groupId>
+        <artifactId>ufast-starter-parent</artifactId>
+        <version>0.0.3-SNAPSHOT</version>
+    </parent>
 
 
-	<dependencies>
+    <dependencies>
 
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-eureka</artifactId>
-		</dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-eureka</artifactId>
+        </dependency>
 
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-zuul</artifactId>
-			<exclusions>
-				<exclusion>
-					<groupId>org.springframework.boot</groupId>
-					<artifactId>spring-boot-starter-tomcat</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>yb.ecp.fast.infra</groupId>
-			<artifactId>misc</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-freemarker</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.session</groupId>
-			<artifactId>spring-session-data-redis</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-sleuth-zipkin</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.codehaus.janino</groupId>
-			<artifactId>janino</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-devtools</artifactId>
-			<scope>runtime</scope>
-			<optional>true</optional>
-		</dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-zuul</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-tomcat</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>com.bkrwin.ufast.infra</groupId>
+            <artifactId>misc</artifactId>
+            <version>1.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>yb.ecp.fast.infra</groupId>
+            <artifactId>misc</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-freemarker</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.session</groupId>
+            <artifactId>spring-session-data-redis</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-sleuth-zipkin</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.codehaus.janino</groupId>
+            <artifactId>janino</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <scope>runtime</scope>
+            <optional>true</optional>
+        </dependency>
 
-		<!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
-		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<version>1.18.4</version>
-			<scope>provided</scope>
-		</dependency>
+        <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.4</version>
+            <scope>provided</scope>
+        </dependency>
 
-		<!-- https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt -->
-		<dependency>
-			<groupId>io.jsonwebtoken</groupId>
-			<artifactId>jjwt</artifactId>
-			<version>0.7.0</version>
-		</dependency>
+        <!-- https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt -->
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>0.7.0</version>
+        </dependency>
 
-		<dependency>
-			<groupId>com.alibaba</groupId>
-			<artifactId>fastjson</artifactId>
-			<version>1.2.28</version>
-		</dependency>
-	</dependencies>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.28</version>
+        </dependency>
 
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-				<executions>
-					<execution>
-						<goals>
-							<goal>build-info</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<!--<plugin>-->
-				<!--<groupId>org.codehaus.mojo</groupId>-->
-				<!--<artifactId>exec-maven-plugin</artifactId>-->
-				<!--<version>1.2.1</version>-->
-				<!--<executions>-->
-					<!--<execution>-->
-						<!--<id>run-allatori</id>-->
-						<!--<phase>package</phase>-->
-						<!--<goals>-->
-							<!--<goal>exec</goal>-->
-						<!--</goals>-->
-					<!--</execution>-->
-				<!--</executions>-->
-				<!--&lt;!&ndash;<configuration>&ndash;&gt;-->
-					<!--&lt;!&ndash;<executable>java</executable>&ndash;&gt;-->
-					<!--&lt;!&ndash;<arguments>&ndash;&gt;-->
-						<!--&lt;!&ndash;<argument>-Xms128m</argument>&ndash;&gt;-->
-						<!--&lt;!&ndash;<argument>-Xmx512m</argument>&ndash;&gt;-->
-						<!--&lt;!&ndash;<argument>-jar</argument>&ndash;&gt;-->
-						<!--&lt;!&ndash;<argument>${basedir}/../allatori-confusion/allatori.jar</argument>&ndash;&gt;-->
-						<!--&lt;!&ndash;<argument>${basedir}/src/main/resources/allatori.xml</argument>&ndash;&gt;-->
-					<!--&lt;!&ndash;</arguments>&ndash;&gt;-->
-				<!--&lt;!&ndash;</configuration>&ndash;&gt;-->
-			<!--</plugin>-->
-		</plugins>
-	</build>
+        <dependency>
+            <groupId>com.bkrwin.ufast</groupId>
+            <artifactId>auth-api</artifactId>
+            <version>1.0.1-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>build-info</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!--<plugin>-->
+            <!--<groupId>org.codehaus.mojo</groupId>-->
+            <!--<artifactId>exec-maven-plugin</artifactId>-->
+            <!--<version>1.2.1</version>-->
+            <!--<executions>-->
+            <!--<execution>-->
+            <!--<id>run-allatori</id>-->
+            <!--<phase>package</phase>-->
+            <!--<goals>-->
+            <!--<goal>exec</goal>-->
+            <!--</goals>-->
+            <!--</execution>-->
+            <!--</executions>-->
+            <!--&lt;!&ndash;<configuration>&ndash;&gt;-->
+            <!--&lt;!&ndash;<executable>java</executable>&ndash;&gt;-->
+            <!--&lt;!&ndash;<arguments>&ndash;&gt;-->
+            <!--&lt;!&ndash;<argument>-Xms128m</argument>&ndash;&gt;-->
+            <!--&lt;!&ndash;<argument>-Xmx512m</argument>&ndash;&gt;-->
+            <!--&lt;!&ndash;<argument>-jar</argument>&ndash;&gt;-->
+            <!--&lt;!&ndash;<argument>${basedir}/../allatori-confusion/allatori.jar</argument>&ndash;&gt;-->
+            <!--&lt;!&ndash;<argument>${basedir}/src/main/resources/allatori.xml</argument>&ndash;&gt;-->
+            <!--&lt;!&ndash;</arguments>&ndash;&gt;-->
+            <!--&lt;!&ndash;</configuration>&ndash;&gt;-->
+            <!--</plugin>-->
+        </plugins>
+    </build>
 
 
 </project>

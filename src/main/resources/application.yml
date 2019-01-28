@@ -1,7 +1,7 @@
 eureka:
   client:
     service-url:
-      defaultZone: http://eureka.jt.com:9000/eureka/
+      defaultZone: http://10.100.2.109:18001/eureka/
     fetchRegistry: true
   instance:
     ip-address: 127.0.0.1
@@ -37,8 +37,8 @@ zuul:
       path: /ius/**
       serviceId: fast-auth-server
     api-a1:
-      path: /ius-xcs/**
-      serviceId: fast-auth-server-xcs
+      path: /ius-cdw/**
+      serviceId: fast-auth-server-cdw
     api-b:
       path: /ps/**
       serviceId: purchase-server

@@ -44,6 +44,27 @@ public class TockenUtil {
 
     public static void rmUserCookie(HttpServletRequest req, HttpServletResponse response) {
         CookieUtil.delCookie(req, response, JWTConsts.HEADER_STRING);
+        //删除cookie
+        CookieUtil.delCookie(req, response, JWTConsts.USER_INFO);
         req.getHeader(JWTConsts.HEADER_STRING);
+    }
+
+    public static String generateToken(String toJSONString) {
+        TokenAuthenticationHandler tokenAuthenticationHandler = new TokenAuthenticationHandler();
+        String token2 = tokenAuthenticationHandler.generateToken(toJSONString);
+        return token2;
+    }
+
+    public static String getSubjectFromToken(String token) {
+        if (StringUtils.isBlank(token)) {
+            return null;
+        }
+        TokenAuthenticationHandler tokenAuthenticationHandler = new TokenAuthenticationHandler();
+        String token2 = tokenAuthenticationHandler.getSubjectFromToken(token);
+        HashMap<String, String> map = FastJsonUtil.parse(token2, HashMap.class);
+        if (null != map) {
+            return map.get(TokenAuthenticationHandler.CLAIM_KEY_SUBJECT);
+        }
+        return null;
     }
 }

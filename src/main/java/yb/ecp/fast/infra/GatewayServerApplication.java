@@ -1,5 +1,6 @@
 package yb.ecp.fast.infra;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -20,7 +21,6 @@ import org.springframework.session.data.redis.config.annotation.web.http.EnableR
 import org.springframework.session.web.http.DefaultCookieSerializer;
 import yb.ecp.fast.infra.infra.eureka.EurekaDeregister;
 import yb.ecp.fast.infra.infra.monitor.MemoryMonitor;
-import yb.ecp.fast.infra.util.StringUtil;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -29,7 +29,7 @@ import java.util.Set;
 @SpringBootApplication
 @EnableDiscoveryClient
 @EnableZuulProxy
-@EnableFeignClients
+@EnableFeignClients(basePackages = {"yb.ecp.fast.infra.feign", "com.bkrwin.ufast.user.feign"})
 @EnableRedisHttpSession
 @EnableScheduling
 public class GatewayServerApplication {
@@ -43,7 +43,7 @@ public class GatewayServerApplication {
         return new EmbeddedServletContainerCustomizer() {
             @Override
             public void customize(ConfigurableEmbeddedServletContainer container) {
-                if (!StringUtil.isNullOrSpace(String.valueOf(a))) {
+                if (!StringUtils.isNotBlank(String.valueOf(a))) {
                     ErrorPage localErrorPage = new ErrorPage(HttpStatus.NOT_FOUND, a);
                     Set<ErrorPage> s = new HashSet<ErrorPage>();
                     s.add(localErrorPage);

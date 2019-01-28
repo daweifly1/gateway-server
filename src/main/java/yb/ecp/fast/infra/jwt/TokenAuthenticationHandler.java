@@ -18,7 +18,7 @@ public class TokenAuthenticationHandler implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private static final String CLAIM_KEY_CREATED = "created";
-    private static final String CLAIM_KEY_SUBJECT = "subject";
+    public static final String CLAIM_KEY_SUBJECT = "subject";
 
     private static final String DEFAULT_SECRET = "scDemo001";
     public static final Long DEFAULT_EXPIRATION = 5 * 24 * 60 * 60L;
