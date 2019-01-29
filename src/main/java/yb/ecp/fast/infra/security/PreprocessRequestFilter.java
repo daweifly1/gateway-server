@@ -65,7 +65,6 @@ public class PreprocessRequestFilter extends ZuulFilter {
             url = url.substring(1);
         }
         url = url.substring(url.indexOf("/"));
-
         for (String u : this.excludeUrls) {
             if (u.matches(url)) {
                 return true;
@@ -81,22 +80,6 @@ public class PreprocessRequestFilter extends ZuulFilter {
                 return true;
             }
         }
-        //若cookie存在从cookie中校验
-//        String v = CookieUtil.getCookieValueByName(request, "userInfo");
-//        if (StringUtils.isNotBlank(v)) {
-//            String userVo = TockenUtil.getSubjectFromToken(v);
-//            if (StringUtils.isNotBlank(userVo)) {
-//                UserVO userVO = FastJsonUtil.parse(userVo, UserVO.class);
-//                if (null != userVO && userId.equals(userVO.getUserId()) && !CollectionUtils.isEmpty(userVO.getAuthIds())) {
-//                    for (String u : userVO.getAuthIds()) {
-//                        if (u.equals(url)) {
-//                            return true;
-//                        }
-//                    }
-//                }
-//            }
-//        }
-        //调用接口判断?
         logger.info("无权限url:{}", url);
         return false;
     }
