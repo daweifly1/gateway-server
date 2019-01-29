@@ -59,6 +59,7 @@ public class CookieUtil {
      * @author jxf
      */
     public static HttpServletResponse setCookie(HttpServletResponse response, String name, String value, long time) {
+        log.info("{} cookie 写入{}", name, value);
         return doSetCookie(response, name, value, time, true);
     }
 
@@ -82,11 +83,11 @@ public class CookieUtil {
         return response;
     }
 
-    public static void delCookie(HttpServletRequest request,HttpServletResponse response,String name){
+    public static void delCookie(HttpServletRequest request, HttpServletResponse response, String name) {
         Cookie[] cookies = request.getCookies();
-        if (null!=cookies) {
-            for(Cookie cookie : cookies){
-                if(cookie.getName().equals(name)){
+        if (null != cookies) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals(name)) {
                     cookie.setValue(null);
                     cookie.setMaxAge(0);// 立即销毁cookie
                     cookie.setPath("/");

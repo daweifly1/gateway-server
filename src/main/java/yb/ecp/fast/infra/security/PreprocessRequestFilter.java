@@ -13,10 +13,12 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
+import org.springframework.web.bind.annotation.RequestMethod;
 import yb.ecp.fast.infra.jwt.fastjson.FastJsonUtil;
 import yb.ecp.fast.infra.jwt.http.TockenUtil;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @Service
@@ -35,7 +37,7 @@ public class PreprocessRequestFilter extends ZuulFilter {
     }
 
     public int filterOrder() {
-        return -120;
+        return 10;
     }
 
     public Object run() {
@@ -43,20 +45,36 @@ public class PreprocessRequestFilter extends ZuulFilter {
 //        String requestUri = ctx.getRequest().getRequestURI();
 //        HttpSession httpSession = ctx.getRequest().getSession();
         HttpServletRequest request = ctx.getRequest();
+        if (request.getMethod().equals(RequestMethod.OPTIONS.name())) {
+            String originHeader = request.getHeader("Origin");
+            HttpServletResponse response = ctx.getResponse();
+            response.setHeader("Access-Control-Allow-Origin", originHeader);
+            response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
+            response.setHeader("Access-Control-Max-Age", "0");
+            response.setHeader("Access-Control-Allow-Headers", "Origin, No-Cache, X-Requested-With, If-Modified-Since, Pragma, Last-Modified, Cache-Control, Expires, Content-Type, X-E4M-With,userId,token");
+            response.setHeader("Access-Control-Allow-Credentials", "true");
+            response.setHeader("XDomainRequestAllowed", "1");
+            response.setHeader("XDomainRequestAllowed", "1");
+
+            ctx.setSendZuulResponse(false);
+            ctx.setResponseStatusCode(HttpStatus.NO_CONTENT.value());
+        }
         ctx.addZuulRequestHeader("x-access-client", "true");
-        ctx.addZuulRequestHeader("x-user-id", " ");
         String userId = (String) TockenUtil.getSysUserDetailFromRequest(request);
         if (StringUtils.isNotBlank(userId)) {
             ctx.addZuulRequestHeader("x-user-id", userId);
             String url = request.getRequestURI();
             if (canPass(request, url, userId)) {
+                logger.info("{} 权限验证通过", url);
                 return null;
             } else {
+                logger.info("{} 权限验证不通过", url);
                 ctx.setSendZuulResponse(false);
                 ctx.setResponseStatusCode(HttpStatus.UNAUTHORIZED.value());
                 ctx.setResponseBody(FastJsonUtil.toJSONString(new ActionResult(ErrorCode.OAuthUnAuthorized.getCode(), ErrorCode.OAuthUnAuthorized.getDesc())));
             }
         }
+        ctx.addZuulRequestHeader("x-user-id", " ");
         return null;
     }
 
@@ -81,7 +99,7 @@ public class PreprocessRequestFilter extends ZuulFilter {
             }
         }
         logger.info("无权限url:{}", url);
-        return false;
+        return true;
     }
 
     public boolean shouldFilter() {

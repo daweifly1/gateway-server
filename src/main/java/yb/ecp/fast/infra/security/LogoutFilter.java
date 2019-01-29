@@ -45,6 +45,12 @@ public class LogoutFilter extends ZuulFilter {
     public boolean shouldFilter() {
         RequestContext ctx = RequestContext.getCurrentContext();
         String requestUri = ctx.getRequest().getRequestURI();
+
+        if (requestUri.startsWith("/")) {
+            requestUri = requestUri.substring(1);
+        }
+        requestUri = requestUri.substring(requestUri.indexOf("/"));
+
         for (String url : this.logoutUrls) {
             if (requestUri.matches(url)) {
                 return true;

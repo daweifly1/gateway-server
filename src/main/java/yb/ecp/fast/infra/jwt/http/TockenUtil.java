@@ -44,8 +44,6 @@ public class TockenUtil {
 
     public static void rmUserCookie(HttpServletRequest req, HttpServletResponse response) {
         CookieUtil.delCookie(req, response, JWTConsts.HEADER_STRING);
-        //删除cookie
-        CookieUtil.delCookie(req, response, JWTConsts.USER_INFO);
         req.getHeader(JWTConsts.HEADER_STRING);
     }
 

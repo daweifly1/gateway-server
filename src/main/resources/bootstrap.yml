@@ -27,7 +27,7 @@ fast:
     login:
       url: /ius/auth/login,/ius/auth/sigin,/ius-cdw/auth/login
     logout:
-      url: /ius/auth/logout,/ius/auth/signout
+      url: /ius/auth/logout,/ius/auth/signout,/auth/logout,/auth/signout
     thirdAuth:
       url: /ius/thirdAuth/webAuth,/ius/thirdAuth/registerAccount
     thirdUser:
@@ -35,7 +35,7 @@ fast:
     getLogin:
       url: /ius/profile/getLogin
     exclud:
-      url: /menu/authorized,/auth/login,/menu/authorized,/profile/getLogin,/auth/logout,/auth/signout,/scepter/getAuthCodes,/thirdAuth/webAuth,/thirdAuth/registerAccount,/thirdAuth/getUserInfo
+      url: /auth/kaptcha,/menu/authorized,/auth/login,/menu/authorized,/profile/getLogin,/auth/logout,/auth/signout,/scepter/getAuthCodes,/thirdAuth/webAuth,/thirdAuth/registerAccount,/thirdAuth/getUserInfo
 zuul:
   sensitive-headers: x-user-id,x-access-client,x-case-ticket
   host:

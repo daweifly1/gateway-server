@@ -45,7 +45,7 @@ public class LoginFilter extends ZuulFilter {
             this.mylog.error(actionResult.getMessage());
         } else {
             userId = (String) actionResult.getValue();
-            actionResult.setValue(null);
+//            actionResult.setValue(null);
         }
         requestContext.setResponseBody(objectMapper.writeValueAsString(actionResult));
         return userId;
