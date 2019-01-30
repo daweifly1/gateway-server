@@ -29,6 +29,10 @@ public class PreprocessRequestFilter extends ZuulFilter {
     @Value("${fast.auth.exclud.url}")
     String[] excludeUrls;
 
+    @Value("${fast.auth.excludPre.preUrl}")
+    String[] excludePreUrls;
+
+
     @Autowired
     private AuthClient authClient;
 
@@ -65,16 +69,16 @@ public class PreprocessRequestFilter extends ZuulFilter {
         if (StringUtils.isNotBlank(userId)) {
             ctx.addZuulRequestHeader("x-user-id", userId);
             String url = request.getRequestURI();
+            if ("/".equals(url) || StringUtils.isBlank(url)) {
+                return null;
+            }
             if (canPass(request, url, userId)) {
-                logger.info("{} 权限验证通过", url);
                 return null;
             } else {
                 logger.info("================={}======================== 权限验证不通过", url);
-//                ctx.setSendZuulResponse(false);
-//                ctx.setResponseStatusCode(HttpStatus.UNAUTHORIZED.value());
-//                ctx.setResponseBody(FastJsonUtil.toJSONString(new ActionResult(ErrorCode.OAuthUnAuthorized.getCode(), ErrorCode.OAuthUnAuthorized.getDesc())));
-
-                return null;
+                ctx.setSendZuulResponse(false);
+                ctx.setResponseStatusCode(HttpStatus.UNAUTHORIZED.value());
+                ctx.setResponseBody(FastJsonUtil.toJSONString(new ActionResult(ErrorCode.OAuthUnAuthorized.getCode(), ErrorCode.OAuthUnAuthorized.getDesc())));
             }
         }
         ctx.addZuulRequestHeader("x-user-id", " ");
@@ -82,6 +86,11 @@ public class PreprocessRequestFilter extends ZuulFilter {
     }
 
     private boolean canPass(HttpServletRequest request, String url, String userId) {
+        for (String u : this.excludePreUrls) {
+            if (url.startsWith(u)) {
+                return true;
+            }
+        }
         if (url.startsWith("/")) {
             url = url.substring(1);
         }
@@ -102,7 +111,7 @@ public class PreprocessRequestFilter extends ZuulFilter {
             }
         }
         logger.info("无权限url:{}", url);
-        return true;
+        return false;
     }
 
     public boolean shouldFilter() {

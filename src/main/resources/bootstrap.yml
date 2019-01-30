@@ -35,7 +35,10 @@ fast:
     getLogin:
       url: /ius/profile/getLogin
     exclud:
-      url: /auth/kaptcha,/menu/authorized,/auth/login,/menu/authorized,/profile/getLogin,/auth/logout,/auth/signout,/scepter/getAuthCodes,/thirdAuth/webAuth,/thirdAuth/registerAccount,/thirdAuth/getUserInfo
+      url: /auth/authInfo,/auth/kaptcha,/menu/authorized,/auth/login,/menu/authorized,/profile/getLogin,/auth/logout,/auth/signout,/scepter/getAuthCodes,/thirdAuth/webAuth,/thirdAuth/registerAccount,/thirdAuth/getUserInfo
+    excludPre:
+      preUrl: /web/images
+
 zuul:
   sensitive-headers: x-user-id,x-access-client,x-case-ticket
   host:

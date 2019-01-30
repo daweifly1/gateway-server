@@ -43,7 +43,7 @@ public class GatewayServerApplication {
         return new EmbeddedServletContainerCustomizer() {
             @Override
             public void customize(ConfigurableEmbeddedServletContainer container) {
-                if (!StringUtils.isNotBlank(String.valueOf(a))) {
+                if (StringUtils.isNotBlank(String.valueOf(a))) {
                     ErrorPage localErrorPage = new ErrorPage(HttpStatus.NOT_FOUND, a);
                     Set<ErrorPage> s = new HashSet<ErrorPage>();
                     s.add(localErrorPage);
