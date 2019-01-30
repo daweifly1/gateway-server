@@ -49,12 +49,13 @@ public class PreprocessRequestFilter extends ZuulFilter {
             String originHeader = request.getHeader("Origin");
             HttpServletResponse response = ctx.getResponse();
             response.setHeader("Access-Control-Allow-Origin", originHeader);
-            response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
-            response.setHeader("Access-Control-Max-Age", "0");
-            response.setHeader("Access-Control-Allow-Headers", "Origin, No-Cache, X-Requested-With, If-Modified-Since, Pragma, Last-Modified, Cache-Control, Expires, Content-Type, X-E4M-With,userId,token");
             response.setHeader("Access-Control-Allow-Credentials", "true");
-            response.setHeader("XDomainRequestAllowed", "1");
-            response.setHeader("XDomainRequestAllowed", "1");
+            response.setHeader("Access-Control-Allow-Methods", "*");
+            response.setHeader("Connection", "keep-alive");
+            response.setHeader("Vary", "Origin");
+            response.setHeader("Content-Type", "application/json;charset=UTF-8");
+            response.setHeader("Transfer-Encoding", "chunked");
+            response.setHeader("X-Application-Context: gateway-server-cdw", "gateway-server-cdw:9003");
 
             ctx.setSendZuulResponse(false);
             ctx.setResponseStatusCode(HttpStatus.NO_CONTENT.value());
@@ -68,10 +69,12 @@ public class PreprocessRequestFilter extends ZuulFilter {
                 logger.info("{} 权限验证通过", url);
                 return null;
             } else {
-                logger.info("{} 权限验证不通过", url);
-                ctx.setSendZuulResponse(false);
-                ctx.setResponseStatusCode(HttpStatus.UNAUTHORIZED.value());
-                ctx.setResponseBody(FastJsonUtil.toJSONString(new ActionResult(ErrorCode.OAuthUnAuthorized.getCode(), ErrorCode.OAuthUnAuthorized.getDesc())));
+                logger.info("================={}======================== 权限验证不通过", url);
+//                ctx.setSendZuulResponse(false);
+//                ctx.setResponseStatusCode(HttpStatus.UNAUTHORIZED.value());
+//                ctx.setResponseBody(FastJsonUtil.toJSONString(new ActionResult(ErrorCode.OAuthUnAuthorized.getCode(), ErrorCode.OAuthUnAuthorized.getDesc())));
+
+                return null;
             }
         }
         ctx.addZuulRequestHeader("x-user-id", " ");

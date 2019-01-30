@@ -11,7 +11,7 @@ server:
 
 fast:
   webfront:
-    path: /root/jt_prop/dist
+    path: /root/jt_prop/dist2
     error-page:
       notfound: /index.html
 
