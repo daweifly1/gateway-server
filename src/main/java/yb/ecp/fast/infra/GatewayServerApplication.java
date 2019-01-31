@@ -14,6 +14,7 @@ import org.springframework.cloud.netflix.eureka.serviceregistry.EurekaServiceReg
 import org.springframework.cloud.netflix.feign.EnableFeignClients;
 import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.HttpStatus;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -25,13 +26,13 @@ import yb.ecp.fast.infra.infra.monitor.MemoryMonitor;
 import java.util.HashSet;
 import java.util.Set;
 
-@EnabelCorsFilter
 @SpringBootApplication
 @EnableDiscoveryClient
 @EnableZuulProxy
 @EnableFeignClients(basePackages = {"yb.ecp.fast.infra.feign", "com.bkrwin.ufast.user.feign"})
 @EnableRedisHttpSession
 @EnableScheduling
+@ComponentScan(basePackages = {"yb.ecp.fast.infra", "com.bkrwin.ufast.user.feign.fallback", "com.devi.cache.interceptor"})
 public class GatewayServerApplication {
     public static void main(String[] a) {
         SpringApplication.run(GatewayServerApplication.class, a);

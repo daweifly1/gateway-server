@@ -65,7 +65,7 @@ zuul:
       serviceId: basic-server-hhw
     api-d:
       path: /ss/**
-      serviceId: storage-server-xcs
+      serviceId: storage-server
     api-d1:
       path: /ss-hx/**
       serviceId: storage-server-hx
@@ -105,8 +105,7 @@ cas:
   auth:
     ticket-key: ticket
   defaultUrl: http://219.219.116.11:8080
-logging:
-  file: logs/gateway.log
-  level:
-    root: info
-    ufast: info
+
+feign:
+  hystrix:
+    enabled: true

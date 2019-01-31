@@ -37,7 +37,7 @@ fast:
     exclud:
       url: /auth/authInfo,/auth/kaptcha,/menu/authorized,/auth/login,/menu/authorized,/profile/getLogin,/auth/logout,/auth/signout,/scepter/getAuthCodes,/thirdAuth/webAuth,/thirdAuth/registerAccount,/thirdAuth/getUserInfo
     excludPre:
-      preUrl: /web/images
+      preUrl: /web/
 
 zuul:
   sensitive-headers: x-user-id,x-access-client,x-case-ticket

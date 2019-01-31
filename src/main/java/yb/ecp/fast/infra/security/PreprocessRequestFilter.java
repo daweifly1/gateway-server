@@ -1,8 +1,5 @@
 package yb.ecp.fast.infra.security;
 
-import com.bkrwin.ufast.infra.constants.ErrorCode;
-import com.bkrwin.ufast.infra.infra.ActionResult;
-import com.bkrwin.ufast.user.feign.AuthClient;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 import org.apache.commons.lang.StringUtils;
@@ -14,7 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RequestMethod;
-import yb.ecp.fast.infra.jwt.fastjson.FastJsonUtil;
+import yb.ecp.fast.infra.facade.AuthClientService;
 import yb.ecp.fast.infra.jwt.http.TockenUtil;
 
 import javax.servlet.http.HttpServletRequest;
@@ -34,7 +31,7 @@ public class PreprocessRequestFilter extends ZuulFilter {
 
 
     @Autowired
-    private AuthClient authClient;
+    private AuthClientService authClientService;
 
     public String filterType() {
         return "pre";
@@ -78,7 +75,7 @@ public class PreprocessRequestFilter extends ZuulFilter {
                 logger.info("================={}======================== 权限验证不通过", url);
                 ctx.setSendZuulResponse(false);
                 ctx.setResponseStatusCode(HttpStatus.UNAUTHORIZED.value());
-                ctx.setResponseBody(FastJsonUtil.toJSONString(new ActionResult(ErrorCode.OAuthUnAuthorized.getCode(), ErrorCode.OAuthUnAuthorized.getDesc())));
+//                ctx.setResponseBody(FastJsonUtil.toJSONString(new ActionResult(ErrorCode.OAuthUnAuthorized.getCode(), ErrorCode.OAuthUnAuthorized.getDesc())));
             }
         }
         ctx.addZuulRequestHeader("x-user-id", " ");
@@ -100,18 +97,7 @@ public class PreprocessRequestFilter extends ZuulFilter {
                 return true;
             }
         }
-
-        ActionResult<List<String>> ar = authClient.getAuthCodes(userId, userId);
-        if (null == ar || CollectionUtils.isEmpty(ar.getValue())) {
-            return false;
-        }
-        for (String u : ar.getValue()) {
-            if (u.equals(url)) {
-                return true;
-            }
-        }
-        logger.info("无权限url:{}", url);
-        return false;
+        return authClientService.checkAuthCodeExist(userId,url);
     }
 
     public boolean shouldFilter() {
