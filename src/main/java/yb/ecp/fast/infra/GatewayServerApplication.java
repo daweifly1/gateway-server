@@ -8,20 +8,14 @@ import org.springframework.boot.context.embedded.ConfigurableEmbeddedServletCont
 import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomizer;
 import org.springframework.boot.web.servlet.ErrorPage;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-import org.springframework.cloud.netflix.eureka.EurekaClientConfigBean;
-import org.springframework.cloud.netflix.eureka.serviceregistry.EurekaRegistration;
-import org.springframework.cloud.netflix.eureka.serviceregistry.EurekaServiceRegistry;
 import org.springframework.cloud.netflix.feign.EnableFeignClients;
 import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.HttpStatus;
 import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
 import org.springframework.session.web.http.DefaultCookieSerializer;
-import yb.ecp.fast.infra.infra.eureka.EurekaDeregister;
-import yb.ecp.fast.infra.infra.monitor.MemoryMonitor;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -54,19 +48,11 @@ public class GatewayServerApplication {
         };
     }
 
-    @Bean
-    public MemoryMonitor memoryMonitor() {
-        return new MemoryMonitor() {
-            @Scheduled(fixedRate = 300000L)
-            public void scheduleMonitor() {
-            }
-        };
-    }
 
-    @Bean(initMethod = "showDeregisterInfo", destroyMethod = "deregister")
-    public EurekaDeregister eurekaDeregister(EurekaRegistration a, EurekaServiceRegistry a2, EurekaClientConfigBean a3) {
-        return new EurekaDeregister(a, a2, a3);
-    }
+//    @Bean(initMethod = "showDeregisterInfo", destroyMethod = "deregister")
+//    public EurekaDeregister eurekaDeregister(EurekaRegistration a, EurekaServiceRegistry a2, EurekaClientConfigBean a3) {
+//        return new EurekaDeregister(a, a2, a3);
+//    }
 
     @Bean
     public DefaultCookieSerializer defaultCookieSerializer(@Value("${server.session.cookie.name:SESSION}") String a) {
