@@ -7,17 +7,17 @@ eureka:
     ip-address: 127.0.0.1
     prefer-ip-address: true
 server:
-  port: 9003
+  port: 9103
 
 fast:
   webfront:
-    path: /root/jt_prop/dist2
+    path: /root/jt_prop/dist
     error-page:
       notfound: /index.html
 
 spring:
   redis:
-    host: redis.jt.com
+    host: 10.100.2.106
     port: 6379
   resources:
     static-locations: classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/,file:${fast.webfront.path}
@@ -25,10 +25,10 @@ spring:
   #    inetutils:
   #      preferred-networks:
   #      - 127.0
-  zipkin:
-    enabled: false
-    #当enabled=true时，base-url需要配置
-    base-url: http://192.168.1.149:9002
+#  zipkin:
+#    enabled: false
+#    #当enabled=true时，base-url需要配置
+#    base-url: http://192.168.1.149:9002
 
 
 zuul:

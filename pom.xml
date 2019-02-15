@@ -6,6 +6,7 @@
     <groupId>yb.ecp.fast.infra</groupId>
     <artifactId>gateway-server</artifactId>
     <packaging>jar</packaging>
+    <version>1.0-SNAPSHOT</version>
 
     <name>gateway-server</name>
     <description>api gateway for project of spring cloud</description>

@@ -4,6 +4,8 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 import yb.ecp.fast.infra.jwt.http.CookieUtil;
 
 import javax.servlet.http.HttpServletResponse;
@@ -13,14 +15,18 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Slf4j
+@Component
 public class TokenAuthenticationHandler implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private static final String CLAIM_KEY_CREATED = "created";
-    public static final String CLAIM_KEY_SUBJECT = "subject";
+    @Value("${fast.auth.login.claim_key_created:created}")
+    private String CLAIM_KEY_CREATED;
+    @Value("${fast.auth.login.claim_key_subject:subject}")
+    public String CLAIM_KEY_SUBJECT;
+    @Value("${fast.auth.login.default_secret:scDemo001}")
+    private String DEFAULT_SECRET = "scDemo001";
 
-    private static final String DEFAULT_SECRET = "scDemo001";
     public static final Long DEFAULT_EXPIRATION = 5 * 24 * 60 * 60L;
 
     private String secret = DEFAULT_SECRET;

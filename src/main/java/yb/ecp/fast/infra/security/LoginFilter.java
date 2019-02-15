@@ -7,6 +7,7 @@ import com.netflix.zuul.context.RequestContext;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import yb.ecp.fast.infra.infra.ActionResult;
@@ -24,6 +25,9 @@ public class LoginFilter extends ZuulFilter {
 
     @Value("${fast.auth.login.url}")
     String[] loginUrls;
+
+    @Autowired
+    TokenAuthenticationHandler tokenAuthenticationHandler;
 
     public String filterType() {
         return "post";
@@ -58,7 +62,7 @@ public class LoginFilter extends ZuulFilter {
             String userId = postUserLogin(ctx);
             if (StringUtils.isNotBlank(userId)) {
 //                httpSession.setAttribute("uid", userId);
-                TokenAuthenticationHandler tokenAuthenticationHandler = new TokenAuthenticationHandler();
+//                TokenAuthenticationHandler tokenAuthenticationHandler = new TokenAuthenticationHandler();
                 Map<String, String> user = new HashMap<>();
                 user.put("uid", userId);
                 String token = tokenAuthenticationHandler.generateToken(FastJsonUtil.toJSONString(user));

@@ -9,14 +9,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RequestMethod;
 import yb.ecp.fast.infra.facade.AuthClientService;
-import yb.ecp.fast.infra.jwt.http.TockenUtil;
+import yb.ecp.fast.infra.jwt.JWTConsts;
+import yb.ecp.fast.infra.jwt.TokenAuthenticationHandler;
+import yb.ecp.fast.infra.jwt.fastjson.FastJsonUtil;
+import yb.ecp.fast.infra.jwt.http.CookieUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.List;
+import java.util.HashMap;
 
 @Service
 public class PreprocessRequestFilter extends ZuulFilter {
@@ -29,6 +31,8 @@ public class PreprocessRequestFilter extends ZuulFilter {
     @Value("${fast.auth.excludPre.preUrl}")
     String[] excludePreUrls;
 
+    @Autowired
+    TokenAuthenticationHandler tokenAuthenticationHandler;
 
     @Autowired
     private AuthClientService authClientService;
@@ -56,13 +60,13 @@ public class PreprocessRequestFilter extends ZuulFilter {
             response.setHeader("Vary", "Origin");
             response.setHeader("Content-Type", "application/json;charset=UTF-8");
             response.setHeader("Transfer-Encoding", "chunked");
-            response.setHeader("X-Application-Context: gateway-server-cdw", "gateway-server-cdw:9003");
+//            response.setHeader("X-Application-Context: gateway-server", "gateway-server:9003");
 
             ctx.setSendZuulResponse(false);
             ctx.setResponseStatusCode(HttpStatus.NO_CONTENT.value());
         }
         ctx.addZuulRequestHeader("x-access-client", "true");
-        String userId = (String) TockenUtil.getSysUserDetailFromRequest(request);
+        String userId = querySysUserDetailFromRequest(request);
         if (StringUtils.isNotBlank(userId)) {
             ctx.addZuulRequestHeader("x-user-id", userId);
             String url = request.getRequestURI();
@@ -82,6 +86,33 @@ public class PreprocessRequestFilter extends ZuulFilter {
         return null;
     }
 
+    private String querySysUserDetailFromRequest(HttpServletRequest req) {
+        String token = req.getHeader(JWTConsts.HEADER_STRING);
+        if (StringUtils.isBlank(token)) {
+            token = (String) req.getSession().getAttribute(JWTConsts.HEADER_STRING);
+        }
+        if (StringUtils.isBlank(token)) {
+            token = (String) CookieUtil.getCookieValueByName(req, JWTConsts.HEADER_STRING);
+        }
+        if (StringUtils.isNotBlank(token)) {
+            return getSysUserId(token);
+        }
+        return null;
+    }
+
+    private String getSysUserId(String token) {
+        if (StringUtils.isBlank(token)) {
+            return null;
+        }
+        token = token.replace(JWTConsts.TOKEN_PREFIX.trim(), "");
+        String token2 = tokenAuthenticationHandler.getSubjectFromToken(token);
+        HashMap<String, String> map = FastJsonUtil.parse(token2, HashMap.class);
+        if (null != map) {
+            return map.get("uid");
+        }
+        return null;
+    }
+
     private boolean canPass(HttpServletRequest request, String url, String userId) {
         for (String u : this.excludePreUrls) {
             if (url.startsWith(u)) {
@@ -97,7 +128,7 @@ public class PreprocessRequestFilter extends ZuulFilter {
                 return true;
             }
         }
-        return authClientService.checkAuthCodeExist(userId,url);
+        return authClientService.checkAuthCodeExist(userId, url);
     }
 
     public boolean shouldFilter() {

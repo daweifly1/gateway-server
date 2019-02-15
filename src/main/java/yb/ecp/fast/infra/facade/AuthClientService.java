@@ -30,7 +30,7 @@ public class AuthClientService {
         return ar.getValue();
     }
 
-    @GuavaLocalCache(expireTime = 60, refreshTime = 40, group = "gw", preFix = "checkAuthCodeExist_", keyExt = "#userId+#url")
+//    @GuavaLocalCache(expireTime = 60, refreshTime = 40, group = "gw", preFix = "checkAuthCodeExist_", keyExt = "#userId+#url")
     public boolean checkAuthCodeExist(String userId, String url) {
         ActionResult<Boolean> r = authClient.checkAuthCodes(userId, url);
         if (null == r || null == r.getValue()) {
