@@ -23,10 +23,10 @@ import java.util.Set;
 @SpringBootApplication
 @EnableDiscoveryClient
 @EnableZuulProxy
-@EnableFeignClients(basePackages = {"yb.ecp.fast.infra.feign", "com.bkrwin.ufast.user.feign"})
+@EnableFeignClients(basePackages = {"yb.ecp.fast.infra.feign", "com.xgit.bj.auth.feign"})
 @EnableRedisHttpSession
 @EnableScheduling
-@ComponentScan(basePackages = {"yb.ecp.fast.infra", "com.bkrwin.ufast.user.feign.fallback", "com.devi.cache.interceptor"})
+@ComponentScan(basePackages = {"yb.ecp.fast.infra", "com.xgit.bj.auth.feign", "com.devi.cache.interceptor"})
 public class GatewayServerApplication {
     public static void main(String[] a) {
         SpringApplication.run(GatewayServerApplication.class, a);

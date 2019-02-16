@@ -1,9 +1,10 @@
 package yb.ecp.fast.infra.security;
 
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
+import com.xgit.bj.auth.service.VO.sys.SysUserLoginInfoVO;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,33 +39,42 @@ public class LoginFilter extends ZuulFilter {
     }
 
 
-    protected String postUserLogin(RequestContext requestContext) throws Exception {
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+    protected SysUserLoginInfoVO postUserLogin(RequestContext requestContext) throws Exception {
         InputStream inputStream = requestContext.getResponseDataStream();
-        ActionResult<String> actionResult = (ActionResult) objectMapper.readValue(inputStream, ActionResult.class);
-        inputStream.close();
-        String userId = "";
-        if (actionResult.getCode() != 0) {
-            this.mylog.error(actionResult.getMessage());
-        } else {
-            userId = (String) actionResult.getValue();
-//            actionResult.setValue(null);
+        try {
+//        ObjectMapper objectMapper = new ObjectMapper();
+//        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+//        ActionResult<SysUserLoginInfoVO> actionResult = (ActionResult<SysUserLoginInfoVO>) objectMapper.readValue(inputStream, ActionResult.class);
+            String json = FastJsonUtil.convertStream2Json(inputStream);
+            requestContext.setResponseBody(json);
+            SysUserLoginInfoVO user = null;
+            if (StringUtils.isNotBlank(json)) {
+//                ActionResult<SysUserLoginInfoVO> obj = (ActionResult<SysUserLoginInfoVO>) JSON.parseObject(js, new TypeReference<Result<User>>(){});
+                ActionResult<SysUserLoginInfoVO> actionResult = JSON.parseObject(json, new TypeReference<ActionResult<SysUserLoginInfoVO>>() {
+                });
+                if (actionResult.getCode() != 0) {
+                    this.mylog.error(actionResult.getMessage());
+                } else {
+                    user = actionResult.getValue();
+                }
+            }
+            return user;
+        } finally {
+            inputStream.close();
         }
-        requestContext.setResponseBody(objectMapper.writeValueAsString(actionResult));
-        return userId;
     }
 
     public Object run() {
         RequestContext ctx = RequestContext.getCurrentContext();
 //        HttpSession httpSession = ctx.getRequest().getSession();
         try {
-            String userId = postUserLogin(ctx);
-            if (StringUtils.isNotBlank(userId)) {
+            SysUserLoginInfoVO sysUserLoginInfoVO = postUserLogin(ctx);
+            if (null != sysUserLoginInfoVO) {
 //                httpSession.setAttribute("uid", userId);
 //                TokenAuthenticationHandler tokenAuthenticationHandler = new TokenAuthenticationHandler();
                 Map<String, String> user = new HashMap<>();
-                user.put("uid", userId);
+                user.put("uid", sysUserLoginInfoVO.getUserId());
+                user.put("loginName", sysUserLoginInfoVO.getLoginName());
                 String token = tokenAuthenticationHandler.generateToken(FastJsonUtil.toJSONString(user));
                 tokenAuthenticationHandler.doRefreshToken(ctx.getResponse(), token, true);
             }

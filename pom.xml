@@ -85,7 +85,7 @@
         </dependency>
 
         <dependency>
-            <groupId>com.bkrwin.ufast</groupId>
+            <groupId>com.xgit.bj.auth</groupId>
             <artifactId>auth-api</artifactId>
             <version>1.0.1-SNAPSHOT</version>
         </dependency>

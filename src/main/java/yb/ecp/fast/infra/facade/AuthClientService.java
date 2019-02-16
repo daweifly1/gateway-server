@@ -1,8 +1,8 @@
 package yb.ecp.fast.infra.facade;
 
-import com.bkrwin.ufast.infra.infra.ActionResult;
-import com.bkrwin.ufast.user.feign.AuthClient;
 import com.devi.cache.interceptor.GuavaLocalCache;
+import com.xgit.bj.auth.feign.AuthClient;
+import com.xgit.bj.core.rsp.ActionResult;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +30,7 @@ public class AuthClientService {
         return ar.getValue();
     }
 
-//    @GuavaLocalCache(expireTime = 60, refreshTime = 40, group = "gw", preFix = "checkAuthCodeExist_", keyExt = "#userId+#url")
+    //    @GuavaLocalCache(expireTime = 60, refreshTime = 40, group = "gw", preFix = "checkAuthCodeExist_", keyExt = "#userId+#url")
     public boolean checkAuthCodeExist(String userId, String url) {
         ActionResult<Boolean> r = authClient.checkAuthCodes(userId, url);
         if (null == r || null == r.getValue()) {

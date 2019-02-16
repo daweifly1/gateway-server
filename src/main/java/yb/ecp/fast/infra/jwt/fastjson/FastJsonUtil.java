@@ -9,8 +9,13 @@ import com.alibaba.fastjson.serializer.ObjectSerializer;
 import com.alibaba.fastjson.serializer.SerializeConfig;
 import com.alibaba.fastjson.serializer.SerializeFilter;
 import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.xgit.bj.auth.service.VO.sys.SysUserLoginInfoVO;
 import org.apache.commons.lang.StringUtils;
+import yb.ecp.fast.infra.infra.ActionResult;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -230,4 +235,23 @@ public final class FastJsonUtil {
         return result;
     }
 
+    public static String convertStream2Json(InputStream inputStream) throws IOException {
+        String jsonStr = "";
+        // ByteArrayOutputStream相当于内存输出流
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        byte[] buffer = new byte[1024];
+        int len = 0;
+        // 将输入流转移到内存输出流中
+        while ((len = inputStream.read(buffer, 0, buffer.length)) != -1) {
+            out.write(buffer, 0, len);
+        }
+        // 将内存流转换为字符串
+        jsonStr = new String(out.toByteArray());
+        return jsonStr;
+    }
+
+
+    public static ActionResult<SysUserLoginInfoVO> parseInputStream(InputStream inputStream, Class<ActionResult> actionResultClass) throws IOException {
+        return parse(convertStream2Json(inputStream), actionResultClass);
+    }
 }
