@@ -128,6 +128,11 @@ public class PreprocessRequestFilter extends ZuulFilter {
                 return true;
             }
         }
+//        boolean r = authClientService.checkAuthCodeExist(userId, url);
+//        if (!r) {
+//            logger.info("================={}======================== 权限验证不通过", url);
+//        }
+//        return true;
         return authClientService.checkAuthCodeExist(userId, url);
     }
 
