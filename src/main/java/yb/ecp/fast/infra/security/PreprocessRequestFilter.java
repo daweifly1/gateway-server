@@ -114,21 +114,22 @@ public class PreprocessRequestFilter extends ZuulFilter {
     }
 
     private boolean canPass(HttpServletRequest request, String url, String userId) {
-        for (String u : this.excludePreUrls) {
-            if (url.startsWith(u)) {
-                return true;
-            }
-        }
-        if (url.startsWith("/")) {
-            url = url.substring(1);
-        }
-        url = url.substring(url.indexOf("/"));
-        for (String u : this.excludeUrls) {
-            if (u.matches(url)) {
-                return true;
-            }
-        }
-        return authClientService.checkAuthCodeExist(userId, url);
+//        for (String u : this.excludePreUrls) {
+//            if (url.startsWith(u)) {
+//                return true;
+//            }
+//        }
+//        if (url.startsWith("/")) {
+//            url = url.substring(1);
+//        }
+//        url = url.substring(url.indexOf("/"));
+//        for (String u : this.excludeUrls) {
+//            if (u.matches(url)) {
+//                return true;
+//            }
+//        }
+//        return authClientService.checkAuthCodeExist(userId, url);
+        return true;
     }
 
     public boolean shouldFilter() {
