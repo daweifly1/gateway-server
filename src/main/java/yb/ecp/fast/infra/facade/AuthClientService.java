@@ -32,11 +32,16 @@ public class AuthClientService {
 
     //    @GuavaLocalCache(expireTime = 60, refreshTime = 40, group = "gw", preFix = "checkAuthCodeExist_", keyExt = "#userId+#url")
     public boolean checkAuthCodeExist(String userId, String url) {
-        ActionResult<Boolean> r = authClient.checkAuthCodes(userId, url);
-        if (null == r || null == r.getValue()) {
-            log.info("无权限url:{}", url);
+        try {
+            ActionResult<Boolean> r = authClient.checkAuthCodes(userId, url);
+            if (null == r || null == r.getValue()) {
+                log.info("无权限url:{}", url);
+                return false;
+            }
+            return r.getValue();
+        } catch (Exception e) {
+            log.warn("鉴权失败:{}", url, e);
             return false;
         }
-        return r.getValue();
     }
 }
