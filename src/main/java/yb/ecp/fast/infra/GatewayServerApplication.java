@@ -21,11 +21,11 @@ import java.util.HashSet;
 import java.util.Set;
 
 @SpringBootApplication
-@EnableDiscoveryClient
+//@EnableDiscoveryClient  EnableZuulProxy依赖
 @EnableZuulProxy
 @EnableFeignClients(basePackages = {"yb.ecp.fast.infra.feign", "com.xgit.bj.auth.feign"})
-@EnableRedisHttpSession
-@EnableScheduling
+//@EnableRedisHttpSession
+//@EnableScheduling
 @ComponentScan(basePackages = {"yb.ecp.fast.infra", "com.xgit.bj.auth.feign", "com.devi.cache.interceptor"})
 public class GatewayServerApplication {
     public static void main(String[] a) {
