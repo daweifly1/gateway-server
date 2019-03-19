@@ -1,60 +1,102 @@
 eureka:
   client:
-    service-url:
-      defaultZone: http://10.100.2.109:18001/eureka/
-    fetchRegistry: true
+    serviceUrl:
+      defaultZone:  http://10.100.2.106:9001/eureka/
   instance:
-    ip-address: 127.0.0.1
     prefer-ip-address: true
-server:
-  port: 9013
-fast:
-  webfront:
-    path: f:\jcc\web
-    error-page:
-      notfound: /index.html
+
 spring:
+  session.store-type: none
   redis:
-    host: 10.100.2.134
+    host: 10.100.2.106
     port: 6379
-  resources:
-    static-locations: classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/,file:${fast.webfront.path}
-  #  cloud:
-  #    inetutils:
-  #      preferred-networks:
-  #      - 127.0
+    pool.max-active: 8
+
+  cloud:
+    config:
+      server:
+        native:
+          searchLocations: file:/root/xcmg/conf
+    inetutils:
+      preferredNetworks[0]: ^10\.100
+
+  profiles:
+    active: native
 
 
+  http:
+    multipart:
+      maxFileSize: 10MB
+      maxRequestSize: 10MB
+
+  file:
+    download:
+      path: /root/xcmg/file/
 
   zipkin:
     enabled: false
-    #当enabled=true时，base-url需要配置
-    base-url: http://192.168.1.149:9002
+
+  resources:
+    static-locations: classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/,file:C:/Users/xcit/Desktop/bb
+fast:
+  auth:
+    login:
+      url: /ius/auth/login,/ius/auth/sigin
+    logout:
+      url: /ius/auth/logout,/ius/auth/signout
+    webfront:
+      path: /root/xcmg
+    user:
+      session:
+        ttl: 3600
+
 zuul:
   routes:
-    api-a:
-      path: /cop/**
-      service-id: copper-purchase
-    api-b:
-      path: /cos/**
-      service-id: copper-server
-    api-c:
-      path: /jcs/**
-      service-id: storage-server
-    api-d:
-      path: /ius/**
-      service-id: fast-auth-server
-    api-e:
-      path: /web/**
-      service-id: copper-surface
-cas:
-  feign:
-    name: ljy-nju-charging-service
-  auth:
-    ticket-key: ticket
-  defaultUrl: http://219.219.116.11:8080
+    api-a.path: /ius/**
+    api-a.serviceId: fast-auth-server
+
+    api-c.path: /dev/**
+    api-c.serviceId: device-service-cdw
+
+  host:
+    socket-timeout-millis: 6000000
+    connect-timeout-millis: 6000000
+
+  sensitive-headers: x-user-id,x-access-client,x-case-ticket
+  ignored-patterns: /**/fast-amigo/**
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 6000000
+
+ribbon:
+  ReadTimeout: 6000000
+  ConnectTimeout: 6000000
+
+mybatis:
+  config-location: classpath:mybatis/mybatis-config.xml
+  mapper-locations: classpath:mybatis/mapper/*.xml
+  dialect: oracle
+downloadName: /opt/service/ftp/test.txt
+
 logging:
-  file: logs/gateway.log
-  level:
-    root: info
-    ufast: info
+  file: /opt/xgbj/service/mylogfile.log  #日志路径
+  level.root: info
+  log.level: debug
+
+jco:
+  client:
+    user: DMS_QC
+    passwd: 123456
+    lang: ZH
+    client: 800
+    sysnr: 00
+    ashost: 10.1.1.31
+
+server:
+  session:
+    cookie.max-age: 7200

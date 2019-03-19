@@ -47,3 +47,6 @@ hystrix:
 ribbon:
   ReadTimeout: 1000000
   ConnectTimeout: 1000000
+
+server:
+  port: 9013
