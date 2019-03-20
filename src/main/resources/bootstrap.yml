@@ -1,7 +1,7 @@
 eureka:
   instance:
     prefer-ip-address: true
-    health-check-url-path: /health
+    health-check-url-path: ${management.context-path}/health
     registry-fetch-interval-seconds: 5
 spring:
   application:
@@ -54,3 +54,6 @@ hystrix:
 ribbon:
   ReadTimeout: 1000000
   ConnectTimeout: 1000000
+
+server:
+  port: 9013

@@ -19,7 +19,7 @@ import javax.servlet.http.HttpSession;
 @RequestMapping({"/cas"})
 public class CasController {
 
-    @Value("${cas.defaultUrl}")
+    @Value("${cas.defaultUrl:http://219.219.116.11:8080}")
     private String defaultUrl;
     @Autowired
     private CasClient casClient;

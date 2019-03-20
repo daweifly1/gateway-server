@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import yb.ecp.fast.infra.infra.ActionResult;
 
-@FeignClient("${cas.feign.name}")
+@FeignClient("${cas.feign.name:ljy-nju-charging-service}")
 public interface CasClient {
 
    @RequestMapping(

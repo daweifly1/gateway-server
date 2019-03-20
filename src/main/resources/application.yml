@@ -1,111 +1,102 @@
 eureka:
   client:
-    service-url:
-      defaultZone: http://10.100.2.109:18001/eureka/
-    fetchRegistry: true
+    serviceUrl:
+      defaultZone:  http://10.100.2.106:9001/eureka/
   instance:
-    ip-address: 127.0.0.1
     prefer-ip-address: true
-server:
-  port: 9103
-
-fast:
-  webfront:
-    path: /root/jt_prop/dist
-    error-page:
-      notfound: /index.html
 
 spring:
+  session.store-type: none
   redis:
     host: 10.100.2.106
     port: 6379
-  resources:
-    static-locations: classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/,file:${fast.webfront.path}
-  #  cloud:
-  #    inetutils:
-  #      preferred-networks:
-  #      - 127.0
-#  zipkin:
-#    enabled: false
-#    #当enabled=true时，base-url需要配置
-#    base-url: http://192.168.1.149:9002
+    pool.max-active: 8
 
+  cloud:
+    config:
+      server:
+        native:
+          searchLocations: file:/root/xcmg/conf
+    inetutils:
+      preferredNetworks[0]: ^10\.100
+
+  profiles:
+    active: native
+
+
+  http:
+    multipart:
+      maxFileSize: 10MB
+      maxRequestSize: 10MB
+
+  file:
+    download:
+      path: /root/xcmg/file/
+
+  zipkin:
+    enabled: false
+
+  resources:
+    static-locations: classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/,file:C:/Users/xcit/Desktop/bb
+fast:
+  auth:
+    login:
+      url: /ius/auth/login,/ius/auth/sigin
+    logout:
+      url: /ius/auth/logout,/ius/auth/signout
+    webfront:
+      path: /root/xcmg
+    user:
+      session:
+        ttl: 3600
 
 zuul:
   routes:
-    api-a:
-      path: /ius/**
-      serviceId: fast-auth-server
-    api-a1:
-      path: /ius-cdw/**
-      serviceId: fast-auth-server-cdw
-    api-b:
-      path: /ps/**
-      serviceId: purchase-server
-    api-b1:
-      path: /ps-tj/**
-      serviceId: purchase-server-tj
-    api-b2:
-      path: /ps-hx/**
-      serviceId: purchase-server-hx
-    api-b3:
-      path: /ps-zby/**
-      serviceId: purchase-server-zby
-    api-c:
-      path: /bs/**
-      serviceId: basic-server
-    api-c1:
-      path: /bs-hx/**
-      serviceId: basic-server-hx
-    api-c2:
-      path: /bs-xcs/**
-      serviceId: basic-server-xcs
-    api-c3:
-      path: /bs-hhw/**
-      serviceId: basic-server-hhw
-    api-d:
-      path: /ss/**
-      serviceId: storage-server
-    api-d1:
-      path: /ss-hx/**
-      serviceId: storage-server-hx
-    api-d3:
-      path: /ss-tj/**
-      serviceId: storage-server-tj
-    api-d4:
-      path: /ss-xcs/**
-      serviceId: storage-server-xcs
-    api-d6:
-      path: /ss-wk/**
-      serviceId: storage-server-wk
-    api-d7:
-      path: /ss-zlm/**
-      serviceId: storage-server-zlm
-    api-d8:
-      path: /ss-cdw/**
-      serviceId: storage-server-cdw
-    api-d9:
-      path: /ss-hhw/**
-      serviceId: storage-server-hhw
-    api-e:
-      path: /web/**
-      serviceId: surface-server
-    api-e1:
-      path: /web-lly/**
-      serviceId: surface-server-lly
-    api-f:
-      path: /cop/**
-      serviceId: copper-purchase-service
-    api-img:
-      path: /img/**
-      url: http://192.168.1.143:8099/
-cas:
-  feign:
-    name: ljy-nju-charging-service
-  auth:
-    ticket-key: ticket
-  defaultUrl: http://219.219.116.11:8080
+    api-a.path: /ius/**
+    api-a.serviceId: fast-auth-server
 
-feign:
-  hystrix:
-    enabled: true
+    api-c.path: /dev/**
+    api-c.serviceId: device-service-cdw
+
+  host:
+    socket-timeout-millis: 6000000
+    connect-timeout-millis: 6000000
+
+  sensitive-headers: x-user-id,x-access-client,x-case-ticket
+  ignored-patterns: /**/fast-amigo/**
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 6000000
+
+ribbon:
+  ReadTimeout: 6000000
+  ConnectTimeout: 6000000
+
+mybatis:
+  config-location: classpath:mybatis/mybatis-config.xml
+  mapper-locations: classpath:mybatis/mapper/*.xml
+  dialect: oracle
+downloadName: /opt/service/ftp/test.txt
+
+logging:
+  file: /opt/xgbj/service/mylogfile.log  #日志路径
+  level.root: info
+  log.level: debug
+
+jco:
+  client:
+    user: DMS_QC
+    passwd: 123456
+    lang: ZH
+    client: 800
+    sysnr: 00
+    ashost: 10.1.1.31
+
+server:
+  session:
+    cookie.max-age: 7200
