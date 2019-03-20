@@ -4,12 +4,12 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import yb.ecp.fast.infra.infra.ActionResult;
-import yb.ecp.fast.infra.util.StringUtil;
 
 import javax.servlet.http.HttpSession;
 import java.io.InputStream;
@@ -55,7 +55,7 @@ public class LoginFilter extends ZuulFilter {
         HttpSession httpSession = ctx.getRequest().getSession();
         try {
             String userId = postUserLogin(ctx);
-            if (!StringUtil.isNullOrSpace(userId)) {
+            if (StringUtils.isNotBlank(userId)) {
                 httpSession.setAttribute("uid", userId);
             }
         } catch (Exception exc) {

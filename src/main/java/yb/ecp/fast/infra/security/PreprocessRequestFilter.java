@@ -2,10 +2,10 @@ package yb.ecp.fast.infra.security;
 
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import yb.ecp.fast.infra.util.StringUtil;
 
 import javax.servlet.http.HttpSession;
 
@@ -45,7 +45,7 @@ public class PreprocessRequestFilter extends ZuulFilter {
         HttpSession httpSession = ctx.getRequest().getSession();
         ctx.addZuulRequestHeader("x-access-client", "true");
         String userId = (String) httpSession.getAttribute("uid");
-        if (StringUtil.isNullOrSpace(userId) != true) {
+        if (StringUtils.isNotBlank(userId)) {
             ctx.addZuulRequestHeader("x-user-id", userId);
             return null;
         }
