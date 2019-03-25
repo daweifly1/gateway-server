@@ -27,7 +27,7 @@ fast:
     login:
       url: /ius/auth/login,/ius/auth/sigin,/ius-cdw/auth/login
     logout:
-      url: /ius/auth/logout,/ius/auth/signout,/auth/logout,/auth/signout
+      url: /ius/auth/logout,/ius/auth/signout,/auth/logout,/auth/signout,/auth/logout
     thirdAuth:
       url: /ius/thirdAuth/webAuth,/ius/thirdAuth/registerAccount
     thirdUser:
