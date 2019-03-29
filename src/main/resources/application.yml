@@ -35,13 +35,13 @@ zuul:
   routes:
     api-a:
       path: /ius/**
-      serviceId: fast-auth-server
+      serviceId: fast-auth-server-cd
     api-a1:
       path: /ius-cdw/**
       serviceId: fast-auth-server-cdw
     api-b:
       path: /ps/**
-      serviceId: purchase-server
+      serviceId: purchase-server-jt
     api-b1:
       path: /ps-tj/**
       serviceId: purchase-server-tj
@@ -105,6 +105,11 @@ zuul:
     api-g1:
       path: /shop-cdw/**
       serviceId: xgit-shop-server-cdw
+
+    api-h:
+      path: /flow/**
+      serviceId: fast-flow-server
+
 cas:
   feign:
     name: ljy-nju-charging-service
