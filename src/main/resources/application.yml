@@ -35,7 +35,7 @@ zuul:
   routes:
     api-a:
       path: /ius/**
-      serviceId: fast-auth-server-cd
+      serviceId: fast-auth-server-cdw
     api-a1:
       path: /ius-cdw/**
       serviceId: fast-auth-server-cdw
