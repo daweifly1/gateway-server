@@ -22,6 +22,8 @@ spring:
     enabled: true
     template-loader-path: classpath:/META-INF/templates/
     suffix: .ftl
+  session:
+    store-type: none
 fast:
   auth:
     login:
