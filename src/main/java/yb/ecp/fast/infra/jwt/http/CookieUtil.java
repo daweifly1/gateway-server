@@ -74,7 +74,7 @@ public class CookieUtil {
             log.error("", e);
         }
         //不设置超时时间，浏览器关闭后失效
-        cookie.setMaxAge((int) time);
+//        cookie.setMaxAge((int) time);
         // 将Cookie添加到Response中,使之生效addCookie后，如果已经存在相同名字的cookie，则最新的覆盖旧的cookie
         response.addCookie(cookie);
         if (isHttpOnly) {
