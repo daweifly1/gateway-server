@@ -18,7 +18,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.HttpStatus;
 import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
 import org.springframework.session.web.http.DefaultCookieSerializer;
 
 import java.util.HashSet;
@@ -28,7 +27,7 @@ import java.util.Set;
 @EnableDiscoveryClient
 @EnableZuulProxy
 @EnableFeignClients(basePackages = {"yb.ecp.fast.infra.feign", "com.bkrwin.ufast.user.feign"})
-@EnableRedisHttpSession
+//@EnableRedisHttpSession
 @EnableScheduling
 @ComponentScan(basePackages = {"yb.ecp.fast.infra", "com.bkrwin.ufast.user.feign.fallback", "com.devi.cache.interceptor"})
 public class GatewayServerApplication {
