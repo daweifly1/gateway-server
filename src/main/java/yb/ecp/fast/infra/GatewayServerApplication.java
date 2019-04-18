@@ -1,5 +1,6 @@
 package yb.ecp.fast.infra;
 
+import com.bkrwin.ufast.infra.infra.eureka.EurekaDeregister;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
@@ -8,6 +9,9 @@ import org.springframework.boot.context.embedded.ConfigurableEmbeddedServletCont
 import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomizer;
 import org.springframework.boot.web.servlet.ErrorPage;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.netflix.eureka.EurekaClientConfigBean;
+import org.springframework.cloud.netflix.eureka.serviceregistry.EurekaRegistration;
+import org.springframework.cloud.netflix.eureka.serviceregistry.EurekaServiceRegistry;
 import org.springframework.cloud.netflix.feign.EnableFeignClients;
 import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
 import org.springframework.context.annotation.Bean;
@@ -49,10 +53,10 @@ public class GatewayServerApplication {
     }
 
 
-//    @Bean(initMethod = "showDeregisterInfo", destroyMethod = "deregister")
-//    public EurekaDeregister eurekaDeregister(EurekaRegistration a, EurekaServiceRegistry a2, EurekaClientConfigBean a3) {
-//        return new EurekaDeregister(a, a2, a3);
-//    }
+    @Bean(initMethod = "showDeregisterInfo", destroyMethod = "deregister")
+    public EurekaDeregister eurekaDeregister(EurekaRegistration a, EurekaServiceRegistry a2, EurekaClientConfigBean a3) {
+        return new EurekaDeregister(a, a2, a3);
+    }
 
     @Bean
     public DefaultCookieSerializer defaultCookieSerializer(@Value("${server.session.cookie.name:SESSION}") String a) {

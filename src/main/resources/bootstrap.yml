@@ -7,9 +7,9 @@ spring:
   application:
     name: gateway-server
     config:
-      enabled: false
+      enabled: true
       discovery:
-        enabled: false
+        enabled: true
         service-id: config-server
       name: server-config
       profile: test
