@@ -3,11 +3,11 @@ eureka:
     prefer-ip-address: true
     health-check-url-path: ${management.context-path}/health
     registry-fetch-interval-seconds: 5
-    client:
-      serviceUrl:
-        defaultZone:  http://10.100.2.106:9001/eureka/
-      instance:
-        prefer-ip-address: true
+  client:
+    serviceUrl:
+      defaultZone:  http://10.100.2.106:9001/eureka/
+    instance:
+      prefer-ip-address: true
 spring:
   application:
     name: gateway-server
