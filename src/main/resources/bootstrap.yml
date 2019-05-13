@@ -25,7 +25,7 @@ spring:
       discovery:
         enabled: false
         service-id: config-server
-      name: server-config
+      name: jt-gw
       profile: test
   http:
     multipart:
