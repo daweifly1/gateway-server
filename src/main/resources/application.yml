@@ -1,62 +1,86 @@
-
-
+fast:
+  auth:
+    login:
+      url: /ius/auth/login,/ius/auth/sigin,/ius-cdw/auth/login
+    logout:
+      url: /ius/auth/logout,/ius/auth/signout,/auth/logout,/auth/signout,/auth/logout
+    thirdAuth:
+      url: /ius/thirdAuth/webAuth,/ius/thirdAuth/registerAccount
+    thirdUser:
+      url: /ius/thirdAuth/getUserInfo
+    getLogin:
+      url: /ius/profile/getLogin
+    exclud:
+      url: /auth/authInfo,/auth/kaptcha,/menu/authorized,/auth/login,/menu/authorized,/profile/getLogin,/auth/logout,/auth/signout,/scepter/getAuthCodes,/thirdAuth/webAuth,/thirdAuth/registerAccount,/thirdAuth/getUserInfo
+    excludPre:
+      preUrl: /web/
+    webfront:
+      path: D:/nginx-1.15.3/html/dist
+    user:
+      session:
+         ttl: 3600
 spring:
   session.store-type: none
   redis:
     host: 10.100.2.106
     port: 6379
     pool.max-active: 8
-
   cloud:
     config:
       server:
         native:
-          searchLocations: file:/root/xcmg/conf
+          searchLocations: file:/root/jt_prop/conf
     inetutils:
       preferredNetworks[0]: ^10\.100
-
   profiles:
     active: native
-
-
   http:
     multipart:
       maxFileSize: 10MB
       maxRequestSize: 10MB
-
   file:
     download:
-      path: /root/xcmg/file/
-
+      path: /root/jt_prop/file/
   zipkin:
     enabled: false
-
   resources:
-    static-locations: classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/,file:/root/xcmg
-fast:
-  auth:
-    login:
-      url: /ius/auth/login,/ius/auth/sigin
-    logout:
-      url: /ius/auth/logout,/ius/auth/signout
-    webfront:
-      path: /root/xcmg
-    user:
-      session:
-        ttl: 3600
+    static-locations: classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/,file:${fast.webfront.path}
 
 zuul:
   routes:
-    api-a.path: /ius/**
-    api-a.serviceId: fast-auth-server
-
-    api-c.path: /dev/**
-    api-c.serviceId: device-service
-
+      api-d1:
+        path: /ius-xg/**
+        service-id: xgit-auth-server
+      api-b:
+        path: /bs/**
+        service-id: basic-server
+      api-a:
+        path: /ps/**
+        service-id: purchase-server-jt
+      api-f:
+        path: /flow/**
+        service-id: fast-flow-server
+      api-img:
+        path: /img/**
+        url: http://10.100.2.109:8099/
+      api-e:
+        path: /ss/**
+        service-id: storage-server
+      api-d:
+        path: /ius/**
+        service-id: fast-auth-server
+      api-c:
+        path: /web/**
+        service-id: surface-server
+      api-g:
+        path: /shop/**
+        service-id: xgit-shop-server
+      api-h:
+        path: /dev/**
+        service-id: device-service
   host:
     socket-timeout-millis: 6000000
     connect-timeout-millis: 6000000
-
   sensitive-headers: x-user-id,x-access-client,x-case-ticket
   ignored-patterns: /**/fast-amigo/**
 
@@ -72,26 +96,17 @@ ribbon:
   ReadTimeout: 6000000
   ConnectTimeout: 6000000
 
-mybatis:
-  config-location: classpath:mybatis/mybatis-config.xml
-  mapper-locations: classpath:mybatis/mapper/*.xml
-  dialect: oracle
-downloadName: /opt/service/ftp/test.txt
-
-logging:
-  file: /opt/xgbj/service/mylogfile.log  #日志路径
-  level.root: info
-  log.level: debug
-
-jco:
-  client:
-    user: DMS_QC
-    passwd: 123456
-    lang: ZH
-    client: 800
-    sysnr: 00
-    ashost: 10.1.1.31
-
-server:
-  session:
-    cookie.max-age: 7200
+#mybatis:
+#  config-location: classpath:mybatis/mybatis-config.xml
+#  mapper-locations: classpath:mybatis/mapper/*.xml
+#  dialect: oracle
+#downloadName: /opt/service/ftp/test.txt
+#
+#jco:
+#  client:
+#    user: DMS_QC
+#    passwd: 123456
+#    lang: ZH
+#    client: 800
+#    sysnr: 00
+#    ashost: 10.1.1.31

@@ -1,3 +1,7 @@
+server:
+  port: 9103
+  session:
+    cookie.max-age: 7200
 eureka:
   instance:
     prefer-ip-address: true
@@ -5,16 +9,16 @@ eureka:
     registry-fetch-interval-seconds: 5
   client:
     serviceUrl:
-      defaultZone:  http://10.100.2.106:9001/eureka/
+      defaultZone:  http://10.100.2.109:18001/eureka/
     instance:
       prefer-ip-address: true
 spring:
   application:
     name: gateway-server
     config:
-      enabled: true
+      enabled: false
       discovery:
-        enabled: true
+        enabled: false
         service-id: config-server
       name: server-config
       profile: test
@@ -27,22 +31,7 @@ spring:
     enabled: true
     template-loader-path: classpath:/META-INF/templates/
     suffix: .ftl
-fast:
-  auth:
-    login:
-      url: /ius/auth/login,/ius/auth/sigin,/ius-cdw/auth/login
-    logout:
-      url: /ius/auth/logout,/ius/auth/signout,/auth/logout,/auth/signout,/auth/logout
-    thirdAuth:
-      url: /ius/thirdAuth/webAuth,/ius/thirdAuth/registerAccount
-    thirdUser:
-      url: /ius/thirdAuth/getUserInfo
-    getLogin:
-      url: /ius/profile/getLogin
-    exclud:
-      url: /auth/authInfo,/auth/kaptcha,/menu/authorized,/auth/login,/menu/authorized,/profile/getLogin,/auth/logout,/auth/signout,/scepter/getAuthCodes,/thirdAuth/webAuth,/thirdAuth/registerAccount,/thirdAuth/getUserInfo
-    excludPre:
-      preUrl: /web/
+
 
 zuul:
   sensitive-headers: x-user-id,x-access-client,x-case-ticket
@@ -59,6 +48,3 @@ hystrix:
 ribbon:
   ReadTimeout: 1000000
   ConnectTimeout: 1000000
-
-server:
-  port: 9013
