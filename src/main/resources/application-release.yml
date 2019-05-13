@@ -6,7 +6,7 @@ server:
   port: 9013
 fast:
   webfront:
-    path: f:\jcc\web
+    path: /root/jt_prop/dist
     error-page:
       notfound: /index.html
 spring:

@@ -36,7 +36,7 @@ public class GatewayServerApplication {
     }
 
     @Bean
-    public EmbeddedServletContainerCustomizer containerCustomizer(@Value("${fast.webfront.error-page.notfound: }") final String a) {
+    public EmbeddedServletContainerCustomizer containerCustomizer(@Value("${fast.webfront.error-page.notfound}") final String a) {
 
         return new EmbeddedServletContainerCustomizer() {
             @Override
