@@ -4,9 +4,14 @@ server:
     cookie.max-age: 7200
 eureka:
   instance:
-    prefer-ip-address: true
     health-check-url-path: ${management.context-path}/health
     registry-fetch-interval-seconds: 5
+    inetutils:
+      # 可用正则表达式，表示禁用以VMware开头的网络
+      ignoredInterfaces: ['VMware.*']
+      # 可用ip地址段表示
+      preferred-networks: ['10.100','10.3']
+      use-only-site-local-interfaces: true
   client:
     serviceUrl:
       defaultZone:  http://10.100.2.109:18001/eureka/
