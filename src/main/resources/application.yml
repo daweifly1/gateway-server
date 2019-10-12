@@ -8,6 +8,7 @@ eureka:
     prefer-ip-address: true
 server:
   port: 9013
+  session-timeout: 6000
 fast:
   webfront:
     path: C:\working\bj\xcbj-web\dist
