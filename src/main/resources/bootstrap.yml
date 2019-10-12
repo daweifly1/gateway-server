@@ -25,13 +25,13 @@ spring:
 fast:
   auth:
     login:
-      url: /ius/auth/login,/ius/auth/sigin
+      url: /ius/auth/login,/ius/auth/sigin,/auth/login,/auth/sigin
     logout:
-      url: /ius/auth/logout,/ius/auth/signout
+      url: /ius/auth/logout,/ius/auth/signout,/auth/logout,/auth/signout
     thirdAuth:
-      url: /ius/thirdAuth/webAuth,/ius/thirdAuth/registerAccount
+      url: /ius/thirdAuth/webAuth,/ius/thirdAuth/registerAccount,/thirdAuth/webAuth,/thirdAuth/registerAccount
     thirdUser:
-      url: /ius/thirdAuth/getUserInfo
+      url: /ius/thirdAuth/getUserInfo,/thirdAuth/getUserInfo
 zuul:
   sensitive-headers: x-user-id,x-access-client,x-case-ticket
   host:

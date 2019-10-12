@@ -71,6 +71,13 @@ public class LoginFilter extends ZuulFilter {
             if (requestUri.matches(url)) {
                 return true;
             }
+            int ind = requestUri.indexOf("/", 1);
+            if (ind > 0) {
+                String srequestUri = requestUri.substring(ind);
+                if (requestUri.matches(url) || srequestUri.matches(url)) {
+                    return true;
+                }
+            }
         }
         return false;
     }

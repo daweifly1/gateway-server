@@ -1,7 +1,7 @@
 eureka:
   client:
     service-url:
-      defaultZone: http://10.100.2.109:18001/eureka/
+      defaultZone: http://10.100.2.106:9001/eureka/
     fetchRegistry: true
   instance:
     ip-address: 127.0.0.1
@@ -10,12 +10,12 @@ server:
   port: 9013
 fast:
   webfront:
-    path: f:\jcc\web
+    path: C:\working\bj\xcbj-web\dist
     error-page:
       notfound: /index.html
 spring:
   redis:
-    host: 10.100.2.134
+    host: 10.100.2.106
     port: 6379
   resources:
     static-locations: classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/,file:${fast.webfront.path}
@@ -26,10 +26,10 @@ spring:
 
 
 
-  zipkin:
-    enabled: false
-    #当enabled=true时，base-url需要配置
-    base-url: http://192.168.1.149:9002
+#  zipkin:
+#    enabled: false
+#    #当enabled=true时，base-url需要配置
+#    base-url: http://192.168.1.149:9002
 zuul:
   routes:
     api-a:
@@ -39,8 +39,12 @@ zuul:
       path: /cos/**
       service-id: copper-server
     api-c:
-      path: /jcs/**
-      service-id: storage-server
+       path: /dev/**
+       service-id: device-service
+    api-c1:
+         path: /dev-cc/**
+         service-id: device-service-cc
+
     api-d:
       path: /ius/**
       service-id: fast-auth-server
