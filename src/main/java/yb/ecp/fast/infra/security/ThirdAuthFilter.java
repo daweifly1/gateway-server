@@ -17,7 +17,7 @@ import yb.ecp.fast.infra.util.StringUtil;
 @Service
 public class ThirdAuthFilter extends ZuulFilter {
 
-   @Value("${fast.auth.thirdAuth.url}")
+   @Value("${fast.auth.thirdAuth.url:/third}")
    private String[] thirdAuthUrl;
 
 

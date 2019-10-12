@@ -1,49 +1,30 @@
 eureka:
+  client:
+    service-url:
+      defaultZone: http://10.100.2.106:9001/eureka/
+    fetchRegistry: true
   instance:
     prefer-ip-address: true
     health-check-url-path: ${management.context-path}/health
     registry-fetch-interval-seconds: 5
+
 spring:
+  cloud:
+    inetutils:
+      preferredNetworks[0]: ^10
+    config:
+      discovery:
+        service-id: config-server
+        enabled: true
+      enabled: true
+      name: server-config
+      profile: local
   application:
     name: gateway-server
-    config:
-      enabled: false
-      discovery:
-        enabled: false
-        service-id: config-server
-      name: server-config
-      profile: test
-  http:
-    multipart:
-      enabled: true
-      max-file-size: 50MB
-      max-request-size: 50MB
   freemarker:
     enabled: true
     template-loader-path: classpath:/META-INF/templates/
     suffix: .ftl
-fast:
-  auth:
-    login:
-      url: /ius/auth/login,/ius/auth/sigin,/auth/login,/auth/sigin
-    logout:
-      url: /ius/auth/logout,/ius/auth/signout,/auth/logout,/auth/signout
-    thirdAuth:
-      url: /ius/thirdAuth/webAuth,/ius/thirdAuth/registerAccount,/thirdAuth/webAuth,/thirdAuth/registerAccount
-    thirdUser:
-      url: /ius/thirdAuth/getUserInfo,/thirdAuth/getUserInfo
-zuul:
-  sensitive-headers: x-user-id,x-access-client,x-case-ticket
-  host:
-    socket-timeout-millis: 60000
-    connect-timeout-millis: 60000
-hystrix:
-  command:
-    default:
-      execution:
-        isolation:
-          thread:
-            timeoutInMilliseconds: 1000000
-ribbon:
-  ReadTimeout: 1000000
-  ConnectTimeout: 1000000
+
+server:
+  port: 9003

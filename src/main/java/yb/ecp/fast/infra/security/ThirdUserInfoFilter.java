@@ -16,7 +16,7 @@ import java.util.Map;
 @Service
 public class ThirdUserInfoFilter extends ZuulFilter {
 
-    @Value("${fast.auth.thirdUser.url}")
+    @Value("${fast.auth.thirdUser.url:/third}")
     private String[] thirdAuthUrl;
 
 
