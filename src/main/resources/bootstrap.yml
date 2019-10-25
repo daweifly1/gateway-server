@@ -9,6 +9,14 @@ eureka:
     registry-fetch-interval-seconds: 5
 
 spring:
+  session:
+    store-type: redis
+    #    hazelcast:
+    #      flush-mode: immediate
+    redis:
+      flush-mode: immediate
+      namespace: spring:session
+
   cloud:
     inetutils:
       preferredNetworks[0]: ^10
@@ -25,6 +33,11 @@ spring:
     enabled: true
     template-loader-path: classpath:/META-INF/templates/
     suffix: .ftl
+  redis:
+    database: 7
 
 server:
   port: 9003
+  session:
+    timeout: 600
+
