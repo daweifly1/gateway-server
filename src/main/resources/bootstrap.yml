@@ -39,5 +39,5 @@ spring:
 server:
   port: 9003
   session:
-    timeout: 600
+    timeout: 600000
 

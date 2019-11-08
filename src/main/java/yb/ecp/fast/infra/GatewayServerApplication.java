@@ -30,12 +30,15 @@ import java.util.Set;
 @EnableDiscoveryClient
 @EnableZuulProxy
 @EnableFeignClients
-@EnableRedisHttpSession
+@EnableRedisHttpSession(maxInactiveIntervalInSeconds = 180000)
 @EnableScheduling
 public class GatewayServerApplication {
     public static void main(String[] a) {
         SpringApplication.run(GatewayServerApplication.class, a);
     }
+
+
+
 
     @Bean
     public EmbeddedServletContainerCustomizer containerCustomizer(@Value("${fast.webfront.error-page.notfound: }") final String a) {

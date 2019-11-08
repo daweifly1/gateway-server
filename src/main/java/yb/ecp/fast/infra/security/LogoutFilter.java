@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import yb.ecp.fast.infra.infra.http.CookieUtil;
 
 @Service
 public class LogoutFilter extends ZuulFilter {
@@ -23,6 +24,7 @@ public class LogoutFilter extends ZuulFilter {
 
     public Object run() {
         RequestContext ctx = RequestContext.getCurrentContext();
+        CookieUtil.delCookie(ctx.getRequest(), ctx.getResponse(), CookieUtil.OSS_SESSION);
         ctx.getRequest().getSession().invalidate();
         return null;
     }
